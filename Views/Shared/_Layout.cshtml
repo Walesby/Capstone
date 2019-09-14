@@ -13,15 +13,17 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/lightslider.css" rel="stylesheet"/>
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/capstoneicon.png" width="75" height="75" alt="Company Logo"/></a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/capstoneicon.png" width="75" height="75" alt="Company Logo" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -52,10 +54,6 @@
                                 <a class="dropdown-item" href="#">Light Novel Reviews</a>
                             </div>
                         </li>
-                        <i class="fas fa-bell"></i>
-                        <i class="far fa-bell"></i>
-                        <i class="fas fa-envelope"></i>
-                        <i class="far fa-envelope"></i>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">User Name</a>
                             <div class="dropdown-menu">
@@ -66,6 +64,10 @@
                                 <a class="dropdown-item" href="#">Logout</a>
                             </div>
                         </li>
+                        <i class="fas fa-bell"></i>
+                        <i class="far fa-bell"></i>
+                        <i class="fas fa-envelope"></i>
+                        <i class="far fa-envelope"></i>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Forum</a>
                         </li>
@@ -80,16 +82,28 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <div class="row">
+            <div class="col-2">
+
+            </div>
+            <div class="col-8">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+            <div class="col-2" id="friendlist">
+                
+            </div>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - Capstone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row">
+                &copy; 2019 - Capstone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
         </div>
     </footer>
 
@@ -111,9 +125,9 @@
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
     </environment>
+    <script src="~/js/lightslider.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://kit.fontawesome.com/0404e2ccee.js"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>
