@@ -22,70 +22,82 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/capstoneicon.png" width="75" height="75" alt="Company Logo" /></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Anime</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Search Anime</a>
-                                <a class="dropdown-item" href="#">Top Anime</a>
-                                <a class="dropdown-item" href="#">Anime Reviews</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manga</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Search Manga</a>
-                                <a class="dropdown-item" href="#">Top Manga</a>
-                                <a class="dropdown-item" href="#">Manga Reviews</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Light Novel</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Search Light Novels</a>
-                                <a class="dropdown-item" href="#">Top Light Novels</a>
-                                <a class="dropdown-item" href="#">Light Novel Reviews</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">User Name</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Profile</a>
-                                <a class="dropdown-item" href="#">Friends</a>
-                                <a class="dropdown-item" href="#">Reviews</a>
-                                <a class="dropdown-item" href="#">Account Settings</a>
-                                <a class="dropdown-item" href="#">Logout</a>
-                            </div>
-                        </li>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/capstoneicon.png" width="50" height="50" alt="Company Logo" /></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Anime</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Search Anime</a>
+                            <a class="dropdown-item" href="#">Top Anime</a>
+                            <a class="dropdown-item" href="#">Anime Reviews</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manga</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Search Manga</a>
+                            <a class="dropdown-item" href="#">Top Manga</a>
+                            <a class="dropdown-item" href="#">Manga Reviews</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Light Novel</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Search Light Novels</a>
+                            <a class="dropdown-item" href="#">Top Light Novels</a>
+                            <a class="dropdown-item" href="#">Light Novel Reviews</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Forum</a>
+                    </li>                   
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">User Name</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="#">Friends</a>
+                            <a class="dropdown-item" href="#">Reviews</a>
+                            <a class="dropdown-item" href="#">Account Settings</a>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </div>
+                    </li>
+                    <li>
                         <i class="fas fa-bell"></i>
+                    </li>
+                    <li>
                         <i class="far fa-bell"></i>
+                    </li>
+                    <li>
                         <i class="fas fa-envelope"></i>
+                    </li>
+                    <li>
                         <i class="far fa-envelope"></i>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Forum</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+                    </li>
+                    <!---<li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>-->
+                    <li>
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search"/>
+                            <button class="btn-success" type="submit">Search</button>
+                        </form>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
     <div class="container-fluid">
         <partial name="_CookieConsentPartial" />
         <div class="row">
-            <div class="col-2">
+            <div class="col-2 d-none d-md-block">
 
             </div>
             <div class="col-8">
@@ -93,7 +105,7 @@
                     @RenderBody()
                 </main>
             </div>
-            <div class="col-2" id="friendlist">
+            <div class="col-2 d-none d-md-block" id="friendlist">
                 
             </div>
         </div>
