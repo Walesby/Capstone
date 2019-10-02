@@ -18,16 +18,23 @@ namespace Capstone.Controllers
             UserMgr = userManager;
             SignInMgr = signInManager;
         }
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login(User user)
         {
-            var result = await SignInMgr.PasswordSignInAsync("TestUser", "Test123!", false, false);
-            if (result.Succeeded)
+            try
             {
-                return RedirectToAction("Index", "Home");
+                var result = await SignInMgr.PasswordSignInAsync(user.UserName, user.PasswordHash, false, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Result = "Result is: " + result.ToString();
+                }
             }
-            else
+            catch(Exception ex)
             {
-                ViewBag.Result = "Result is: " + result.ToString();
+                ViewBag.Message = ex.Message;
             }
             return View();
         }
@@ -44,11 +51,13 @@ namespace Capstone.Controllers
                 User userExists = await UserMgr.FindByNameAsync(user.UserName);
                 if(userExists == null)
                 {
-                    User newUser = new User();
-                    newUser.UserName = user.UserName;
-                    newUser.Email = user.Email;
-                    newUser.FirstName = user.FirstName;
-                    newUser.LastName = user.LastName;
+                    User newUser = new User
+                    {
+                        UserName = user.UserName,
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName
+                    };
 
                     IdentityResult result = await UserMgr.CreateAsync(newUser, user.PasswordHash);
                     ViewBag.Message = "User was created";
