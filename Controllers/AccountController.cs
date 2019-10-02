@@ -36,21 +36,21 @@ namespace Capstone.Controllers
             await SignInMgr.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> Register(User user)
         {
             try
             {
-                ViewBag.Message = "User already registered";
-                User user = await UserMgr.FindByNameAsync("TestUser");
-                if(user == null)
+                //ViewBag.Message = "User already registered";
+                User userExists = await UserMgr.FindByNameAsync(user.UserName);
+                if(userExists == null)
                 {
-                    user = new User();
-                    user.UserName = "TestUser";
-                    user.Email = "TestUser@test.com";
-                    user.FirstName = "John";
-                    user.LastName = "Doe";
+                    User newUser = new User();
+                    newUser.UserName = user.UserName;
+                    newUser.Email = user.Email;
+                    newUser.FirstName = user.FirstName;
+                    newUser.LastName = user.LastName;
 
-                    IdentityResult result = await UserMgr.CreateAsync(user, "Test123!");
+                    IdentityResult result = await UserMgr.CreateAsync(newUser, user.PasswordHash);
                     ViewBag.Message = "User was created";
                 }
             }
