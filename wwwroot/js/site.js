@@ -4,49 +4,66 @@
 // Write your JavaScript code.
 $(document).ready(function () {
     $('#responsive1,#responsive2,#responsive3').lightSlider({
-        item: 5,
-        auto: true,
+        item: 6,
         loop: true,
         slideMove: 2,
-        slideMargin: 10,
+        slideMargin: 11,
         easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
         speed: 600,
         responsive: [
             {
-                breakpoint: 1500,
+                breakpoint: 2262,
                 settings: {
-                    item: 4,
-                    slideMove: 2,
-                    slideMargin: 25,
+                    item: 6,
+                    slideMove: 1,
+                    slideMargin: 11
                 }
             },
             {
-                breakpoint: 1200,
+                breakpoint: 1921,
+                settings: {
+                    item: 5,
+                    slideMove: 1,
+                    slideMargin: 10
+                }
+            },
+            {
+                breakpoint: 1601,
                 settings: {
                     item: 3,
                     slideMove: 2,
-                    slideMargin: 25,
+                    slideMargin: 10
+                }
+            },
+            {
+                breakpoint: 1201,
+                settings: {
+                    item: 3,
+                    slideMove: 2,
+                    slideMargin: 2
                 }
             },
             {
                 breakpoint: 992,
                 settings: {
-                    item: 3,
+                    item: 5,
                     slideMove: 1,
-                    slideMargin: 6,
+                    slideMargin: 10
                 }
             },
             {
-                breakpoint: 768,
+                breakpoint: 769,
                 settings: {
-                    item: 2,
+                    item: 5,
+                    slideMargin: 100,
                     slideMove: 1
                 }
             },
             {
-                breakpoint: 576,
+                breakpoint: 577,
                 settings: {
-                    item: 1,
+                    item: 3,
+                    slideMargin: -30,
                     slideMove: 1
                 }
             }
@@ -56,16 +73,15 @@ $(document).ready(function () {
         item: 3,
         loop: true,
         slideMove: 1,
-        slideMargin: 100,
+        slideMargin: 10,
         easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
-        speed: 600,
         responsive: [
             {
-                breakpoint: 1200,
+                breakpoint: 1920,
                 settings: {
-                    item: 1,
-                    slideMove: 2,
-                    slideMargin: 0,
+                    item: 3,
+                    slideMove: 1,
+                    slideMargin: 10,
                 }
             },
             {
@@ -86,7 +102,7 @@ $(document).ready(function () {
             {
                 breakpoint: 576,
                 settings: {
-                    item: 1,
+                    item: 3,
                     slideMove: 1
                 }
             }
