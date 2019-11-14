@@ -13,5 +13,10 @@ namespace Capstone.Context
         public IdentityContext(DbContextOptions options) : base(options)
         {
         }
+        public virtual DbSet<AnimeItem> AnimeItem { get; set; }
+        public virtual DbSet<MangaItem> MangaItem { get; set; }
+        public virtual DbSet<NovelItem> NovelItem { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<AnimeList> AnimeList { get; set; }
     }
 }

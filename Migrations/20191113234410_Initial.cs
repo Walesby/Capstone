@@ -4,10 +4,50 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Capstone.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AnimeItem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    EpisodeCount = table.Column<int>(nullable: false),
+                    Status = table.Column<string>(nullable: true),
+                    Aired = table.Column<DateTime>(nullable: false),
+                    Premiered = table.Column<string>(nullable: true),
+                    Source = table.Column<string>(nullable: true),
+                    EpisodeDuration = table.Column<int>(nullable: false),
+                    RecommendedAge = table.Column<string>(nullable: true),
+                    Rating = table.Column<double>(nullable: false),
+                    Popularity = table.Column<int>(nullable: false),
+                    Synopsis = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnimeItem", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AnimeList",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<Guid>(nullable: false),
+                    AnimeItemId = table.Column<int>(nullable: false),
+                    UserRating = table.Column<int>(nullable: false),
+                    Fiex = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnimeList", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -41,12 +81,64 @@ namespace Capstone.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(maxLength: 50, nullable: true),
+                    Birthday = table.Column<DateTime>(nullable: false),
+                    JoinedDate = table.Column<DateTime>(nullable: false),
+                    ProfileImagePath = table.Column<string>(nullable: true),
+                    Gender = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MangaItem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    EpisodeCount = table.Column<int>(nullable: false),
+                    Status = table.Column<string>(nullable: true),
+                    Aired = table.Column<DateTime>(nullable: false),
+                    Premiered = table.Column<string>(nullable: true),
+                    Source = table.Column<string>(nullable: true),
+                    EpisodeDuration = table.Column<int>(nullable: false),
+                    RecommendedAge = table.Column<string>(nullable: true),
+                    Rating = table.Column<double>(nullable: false),
+                    Popularity = table.Column<int>(nullable: false),
+                    Synopsis = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MangaItem", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NovelItem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    EpisodeCount = table.Column<int>(nullable: false),
+                    Status = table.Column<string>(nullable: true),
+                    Aired = table.Column<DateTime>(nullable: false),
+                    Premiered = table.Column<string>(nullable: true),
+                    Source = table.Column<string>(nullable: true),
+                    EpisodeDuration = table.Column<int>(nullable: false),
+                    RecommendedAge = table.Column<string>(nullable: true),
+                    Rating = table.Column<double>(nullable: false),
+                    Popularity = table.Column<int>(nullable: false),
+                    Synopsis = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NovelItem", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,6 +290,12 @@ namespace Capstone.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AnimeItem");
+
+            migrationBuilder.DropTable(
+                name: "AnimeList");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -211,6 +309,12 @@ namespace Capstone.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "MangaItem");
+
+            migrationBuilder.DropTable(
+                name: "NovelItem");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

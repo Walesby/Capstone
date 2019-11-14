@@ -4,82 +4,57 @@
 // Write your JavaScript code.
 $(document).ready(function () {
     $('#responsive1,#responsive2,#responsive3').lightSlider({
-        item: 6,
-        loop: true,
+        item: 4.5,
+        loop: false,
         slideMove: 2,
-        slideMargin: 11,
         easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
         speed: 600,
+        slideMargin: 10,
         responsive: [
             {
-                breakpoint: 2262,
+                breakpoint: 1200,
                 settings: {
-                    item: 6,
-                    slideMove: 1,
-                    slideMargin: 11
-                }
-            },
-            {
-                breakpoint: 1921,
-                settings: {
-                    item: 5,
+                    item: 3.8,
                     slideMove: 1,
                     slideMargin: 10
-                }
-            },
-            {
-                breakpoint: 1601,
-                settings: {
-                    item: 3,
-                    slideMove: 2,
-                    slideMargin: 10
-                }
-            },
-            {
-                breakpoint: 1201,
-                settings: {
-                    item: 3,
-                    slideMove: 2,
-                    slideMargin: 2
                 }
             },
             {
                 breakpoint: 992,
                 settings: {
-                    item: 5,
+                    item: 4.3,
                     slideMove: 1,
                     slideMargin: 10
                 }
             },
             {
-                breakpoint: 769,
+                breakpoint: 768,
                 settings: {
-                    item: 5,
-                    slideMargin: 100,
-                    slideMove: 1
+                    item: 3.1,
+                    slideMove: 1,
+                    slideMargin: 10
                 }
             },
             {
-                breakpoint: 577,
+                breakpoint: 576,
                 settings: {
                     item: 3,
-                    slideMargin: -30,
                     slideMove: 1
                 }
-            }
+            }       
         ]
     });
     $('#responsivepopular1,#responsivepopular2,#responsivepopular3').lightSlider({
-        item: 3,
+        item: 2.2,
         loop: true,
         slideMove: 1,
         slideMargin: 10,
         easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
         responsive: [
             {
-                breakpoint: 1920,
+                breakpoint: 1200,
                 settings: {
-                    item: 3,
+                    item: 1.8,
                     slideMove: 1,
                     slideMargin: 10,
                 }
@@ -87,7 +62,7 @@ $(document).ready(function () {
             {
                 breakpoint: 992,
                 settings: {
-                    item: 1,
+                    item: 3,
                     slideMove: 1,
                     slideMargin: 0,
                 }
@@ -95,7 +70,7 @@ $(document).ready(function () {
             {
                 breakpoint: 768,
                 settings: {
-                    item: 1,
+                    item: 3,
                     slideMove: 1
                 }
             },

@@ -4,14 +4,16 @@ using Capstone.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Capstone.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20191113234410_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,10 +71,6 @@ namespace Capstone.Migrations
                     b.Property<int>("UserRating");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AnimeItemId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("AnimeList");
                 });
@@ -319,19 +317,6 @@ namespace Capstone.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Capstone.Models.AnimeList", b =>
-                {
-                    b.HasOne("Capstone.Models.AnimeItem", "Anime")
-                        .WithMany("AnimeLists")
-                        .HasForeignKey("AnimeItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Capstone.Models.User", "User")
-                        .WithMany("AnimeList")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

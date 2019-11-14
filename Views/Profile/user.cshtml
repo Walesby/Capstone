@@ -1,19 +1,27 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model Capstone.Models.User
 @{
+    var user = Model.UserName;
+    ViewData["Title"] = "Profile";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-12">
+        <h2>@user's Profile</h2>
+    </div>
+</div>
 <div class="row">
     <div class="col-3">
         <div class="row">
-            <div class="col-12">
-                <h2>Base Profile</h2>
+            <div class="col-12">               
                 <img src="~/img/rezero_tn.jpg" />
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <button type="button" class="btn btn-dark btn-block">Anime List</button>
+                <a asp-controller="List" asp-action="AnimeList" asp-route-username="@user">Anime List</a>
             </div>
             <div class="col-12">
                 <button type="button" class="btn btn-dark btn-block">Manga List</button>
@@ -25,13 +33,16 @@
     </div>
     <div class="col-9">
         <div class="row">
-            <div class="col-12">
+            <div class="col-6">
                 <h4>User Stats</h4>
+            </div>
+            <div class="col-6">
+                <h4>User Last Updates</h4>
             </div>
         </div>
         <div class="row" id="animestats">
             <div class="col-6">
-                <h4>Anime Stats</h4>
+                <h4>Anime</h4>
                 <p>Watching: 10</p>
                 <p>Completed: 10</p>
                 <p>On-Hold: 10</p>
@@ -39,7 +50,7 @@
                 <p>Plan to watch: 10</p>
             </div>
             <div class="col-6">
-                <h4>Latest Anime Updates</h4>
+                <h4>Anime</h4>
                 <ol>
                     <li>Attack on titan</li>
                     <li>My hero academia</li>
@@ -51,7 +62,7 @@
         </div>
         <div class="row" id="mangastats">
             <div class="col-6">
-                <h4>Manga Stats</h4>
+                <h4>Manga</h4>
                 <p>Reading: 10</p>
                 <p>Completed: 10</p>
                 <p>On-Hold: 10</p>
@@ -59,7 +70,7 @@
                 <p>Plan to read: 10</p>
             </div>
             <div class="col-6">
-                <h4>Latest Manga Updates</h4>
+                <h4>Manga</h4>
                 <ol>
                     <li>Attack on titan</li>
                     <li>My hero academia</li>
@@ -71,7 +82,7 @@
         </div>
         <div class="row" id="lightnovelstats">
             <div class="col-6">
-                <h4>Light Novel Stats</h4>
+                <h4>Light Novel</h4>
                 <p>Reading: 10</p>
                 <p>Completed: 10</p>
                 <p>On-Hold: 10</p>
@@ -79,7 +90,7 @@
                 <p>Plan to read: 10</p>
             </div>
             <div class="col-6">
-                <h4>Latest Light Novel Updates</h4>
+                <h4>Light Novel</h4>
                 <ol>
                     <li>Re:Zero</li>
                     <li>Overlord</li>
@@ -90,9 +101,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <h4>Favorite Series</h4>
+            <div class="col-8">
+                <h4>Favorites</h4>
             </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-dark btn-block">Update Favorites</button>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
                 <table class="table">
                     <thead>

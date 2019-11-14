@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Capstone.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20191001212715_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20191114015848_CreatedAnimeList")]
+    partial class CreatedAnimeList
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,134 @@ namespace Capstone.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Capstone.Models.AnimeItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Aired");
+
+                    b.Property<int>("EpisodeCount");
+
+                    b.Property<int>("EpisodeDuration");
+
+                    b.Property<int>("Popularity");
+
+                    b.Property<string>("Premiered");
+
+                    b.Property<double>("Rating");
+
+                    b.Property<string>("RecommendedAge");
+
+                    b.Property<string>("Source");
+
+                    b.Property<string>("Status");
+
+                    b.Property<string>("Synopsis");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AnimeItem");
+                });
+
+            modelBuilder.Entity("Capstone.Models.AnimeList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AnimeItemId");
+
+                    b.Property<int>("Fiex");
+
+                    b.Property<Guid>("UserId");
+
+                    b.Property<int>("UserRating");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimeItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AnimeList");
+                });
+
+            modelBuilder.Entity("Capstone.Models.MangaItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Aired");
+
+                    b.Property<int>("EpisodeCount");
+
+                    b.Property<int>("EpisodeDuration");
+
+                    b.Property<int>("Popularity");
+
+                    b.Property<string>("Premiered");
+
+                    b.Property<double>("Rating");
+
+                    b.Property<string>("RecommendedAge");
+
+                    b.Property<string>("Source");
+
+                    b.Property<string>("Status");
+
+                    b.Property<string>("Synopsis");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MangaItem");
+                });
+
+            modelBuilder.Entity("Capstone.Models.NovelItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Aired");
+
+                    b.Property<int>("EpisodeCount");
+
+                    b.Property<int>("EpisodeDuration");
+
+                    b.Property<int>("Popularity");
+
+                    b.Property<string>("Premiered");
+
+                    b.Property<double>("Rating");
+
+                    b.Property<string>("RecommendedAge");
+
+                    b.Property<string>("Source");
+
+                    b.Property<string>("Status");
+
+                    b.Property<string>("Synopsis");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NovelItem");
+                });
 
             modelBuilder.Entity("Capstone.Models.Role", b =>
                 {
@@ -52,6 +180,8 @@ namespace Capstone.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<DateTime>("Birthday");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -60,9 +190,17 @@ namespace Capstone.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)));
+
+                    b.Property<DateTime>("JoinedDate");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(50);
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -79,6 +217,8 @@ namespace Capstone.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("ProfileImagePath");
 
                     b.Property<string>("SecurityStamp");
 
@@ -181,6 +321,19 @@ namespace Capstone.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Capstone.Models.AnimeList", b =>
+                {
+                    b.HasOne("Capstone.Models.AnimeItem", "Anime")
+                        .WithMany("AnimeLists")
+                        .HasForeignKey("AnimeItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Capstone.Models.User", "User")
+                        .WithMany("AnimeList")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
