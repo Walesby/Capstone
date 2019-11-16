@@ -1,4 +1,4 @@
-﻿@model Capstone.Models.AnimeItem
+﻿@model Capstone.Models.AnimeItemViewModel
 @{
     ViewData["Title"] = "item";
     Layout = "/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-12">
-        <h1>Series: @Html.DisplayFor(model => model.Title)</h1>
+        <h1>Series: @Html.DisplayFor(model => model.Anime.Title)</h1>
     </div>
 </div>
 <div class="row">
@@ -27,58 +27,58 @@
         </div>
         <dl class="row" id="info">
             <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.Anime.Type)
             </dt>
             <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Type)
+                @Html.DisplayFor(model => model.Anime.Type)
             </dd>
             <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.EpisodeCount)
+                @Html.DisplayNameFor(model => model.Anime.EpisodeCount)
             </dt>
             <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.EpisodeCount)
+                @Html.DisplayFor(model => model.Anime.EpisodeCount)
             </dd>
             <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.Anime.Status)
             </dt>
             <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Status)
+                @Html.DisplayFor(model => model.Anime.Status)
             </dd>
             <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Aired)
+                @Html.DisplayNameFor(model => model.Anime.Aired)
             </dt>
             <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Aired)
+                @Html.DisplayFor(model => model.Anime.Aired)
             </dd>
             <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Premiered)
+                @Html.DisplayNameFor(model => model.Anime.Premiered)
             </dt>
             <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Premiered)
+                @Html.DisplayFor(model => model.Anime.Premiered)
             </dd>
             <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Source)
+                @Html.DisplayNameFor(model => model.Anime.Source)
             </dt>
             <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Source)
+                @Html.DisplayFor(model => model.Anime.Source)
             </dd>
             <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.EpisodeDuration)
+                @Html.DisplayNameFor(model => model.Anime.EpisodeDuration)
             </dt>
             <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.EpisodeDuration)
+                @Html.DisplayFor(model => model.Anime.EpisodeDuration)
             </dd>
             <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.RecommendedAge)
+                @Html.DisplayNameFor(model => model.Anime.RecommendedAge)
             </dt>
             <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.RecommendedAge)
+                @Html.DisplayFor(model => model.Anime.RecommendedAge)
             </dd>
             <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Rating)
+                @Html.DisplayNameFor(model => model.Anime.Rating)
             </dt>
             <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Rating)
+                @Html.DisplayFor(model => model.Anime.Rating)
             </dd>
         </dl>
     </div>
@@ -88,12 +88,12 @@
             <div class="col-2">
                 <dl class="row" id="info">
                     <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.Rating)
+                        @Html.DisplayNameFor(model => model.Anime.Rating)
                     </dt>
                 </dl>
                 <dl class="row" id="info">
                     <dd class="col-sm-4">
-                        @Html.DisplayFor(model => model.Rating)
+                        @Html.DisplayFor(model => model.Anime.Rating)
                     </dd>
                 </dl>
             </div>
@@ -102,10 +102,10 @@
                     <div class="col-4">
                         <dl class="row" id="info">
                             <dt class="col-sm-8">
-                                @Html.DisplayNameFor(model => model.Popularity)
+                                @Html.DisplayNameFor(model => model.Anime.Popularity)
                             </dt>
                             <dd class="col-sm-4">
-                                @Html.DisplayFor(model => model.Popularity)
+                                @Html.DisplayFor(model => model.Anime.Popularity)
                             </dd>
                         </dl>
                     </div>
@@ -120,20 +120,20 @@
                     <div class="col-4">
                         <dl class="row" id="info">
                             <dt class="col-sm-8">
-                                @Html.DisplayNameFor(model => model.Premiered)
+                                @Html.DisplayNameFor(model => model.Anime.Premiered)
                             </dt>
                             <dd class="col-sm-4">
-                                @Html.DisplayFor(model => model.Premiered)
+                                @Html.DisplayFor(model => model.Anime.Premiered)
                             </dd>
                         </dl>
                     </div>
                     <div class="col-4">
                         <dl class="row" id="info">
                             <dt class="col-sm-8">
-                                @Html.DisplayNameFor(model => model.Type)
+                                @Html.DisplayNameFor(model => model.Anime.Type)
                             </dt>
                             <dd class="col-sm-4">
-                                @Html.DisplayFor(model => model.Type)
+                                @Html.DisplayFor(model => model.Anime.Type)
                             </dd>
                         </dl>
                     </div>
@@ -185,9 +185,32 @@
         </div>
         <div class="row" id="synopsis">
             <div class="col-12">
-                <p>@Html.DisplayFor(model => model.Synopsis)</p>
+                <p>@Html.DisplayFor(model => model.Anime.Synopsis)</p>
             </div>
-        </div>  
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>Reviews</h3>
+            </div>
+        </div>
+        @{
+            var counter = 0;
+        }
+        @foreach (var review in Model.ReviewsList)
+        {
+            var userName = Model.UserList[counter].UserName;
+            counter += 1;
+            <div class="row">
+                <div class="col-12">
+                    <a asp-controller="Profile" asp-action="User" asp-route-username="@userName">@userName</a>
+                    <p>Date: @review.PostDate</p>
+                    <p>Rating: @review.Rating</p>
+                </div>
+                <div class="col-12">
+                    <p>@review.Review</p>
+                </div>
+            </div>
+        }
         <div class="row">
             <div class="col-12">
                 <h3>Recommendations</h3>
@@ -195,7 +218,7 @@
         </div>
         <div class="row" id="recommendations">
             <div class="col-2">
-                <img src="~/img/rezero.jpg" width="100"/>
+                <img src="~/img/rezero.jpg" width="100" />
             </div>
             <div class="col-10">
                 <div class="row">

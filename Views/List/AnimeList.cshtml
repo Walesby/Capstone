@@ -1,8 +1,14 @@
-﻿@model IEnumerable<Capstone.Models.AnimeItem>
+﻿@model Capstone.Models.UserAnimeListViewModel
 @{
-    ViewData["Title"] = "User Anime List";
+    var userName = Model.User.UserName;
+    ViewData["Title"] = $"{@userName}'s Anime List";
     Layout = "/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-12">
+        <h3>@userName's Anime List</h3>
+    </div>
+</div>
 <div class="row">
     <div class="col-12">
         <table class="table">
@@ -18,21 +24,23 @@
                 @{
                     var counter = 0;
                 }
-                @foreach (var anime in Model)
+                @foreach (var anime in Model.AnimeInfoList)
                 {
+                    var animeId = anime.Id;
                     counter += 1;
                     <tr>
                         <td>
                             @counter
                         </td>
                         <td>
-                            @Html.DisplayFor(model => anime.Title)
+                            <a asp-controller="Anime" asp-action="Item" asp-route-id="@animeId">@Html.DisplayFor(model => anime.Title)</a>
                         </td>
                         <td>
+                            @Model.UserAnimeList[counter-1].UserRating
                         </td>
                         <td>
+                            @Model.UserAnimeList[counter - 1].UserProgress / @Html.DisplayFor(model => anime.EpisodeCount)
                         </td>
-
                     </tr>
                 }
             </tbody>

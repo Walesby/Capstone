@@ -18,5 +18,6 @@ namespace Capstone.Context
         public virtual DbSet<NovelItem> NovelItem { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<AnimeList> AnimeList { get; set; }
+        public virtual DbSet<Reviews> Reviews { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace Capstone.Models
         public int EpisodeCount { get; set; }
         public string Status { get; set; }
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Aired { get; set; }
         public string Premiered { get; set; }
         public string Source { get; set; }
@@ -24,7 +25,7 @@ namespace Capstone.Models
         public string Synopsis { get; set; }
 
         public virtual ICollection<AnimeList> AnimeLists { get; set; }
-        //public List<Reviews> Reviews { get; set; }
+        public virtual ICollection<Reviews> Reviews { get; set; }
         //public List<Genre> Genres { get; set; }
     }
 }

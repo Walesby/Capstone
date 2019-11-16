@@ -1,8 +1,9 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model IEnumerable<Capstone.Models.AnimeItem>
+@model Capstone.Models.UserAnimeListViewModel
 @{
+    ViewData["Title"] = $"Top Anime";
 }
 <div class="row">
     <div class="col-12">
@@ -12,31 +13,48 @@
                     <th scope="col">Ranking</th>
                     <th scope="col">Series Title</th>
                     <th scope="col">Average Score</th>
-                    <th scope="col">Your Score</th>
-                    <th scope="col">Your Status</th>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <th scope="col">Your Score</th>
+                        <th scope="col">Your Status</th>
+                    }
                 </tr>
             </thead>
             <tbody>
                 @{
                     var counter = 0;
                 }
-                @foreach (var anime in Model)
+                @foreach (var anime in Model.AnimeInfoList)
                 {
+                    var animeId = anime.Id;
                     counter += 1;
-                    <tr>
+                <tr>
+                    <td>
+                        @counter
+                    </td>
+                    <td>
+                        <a asp-controller="Anime" asp-action="Item" asp-route-id="@animeId">@Html.DisplayFor(model => anime.Title)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => anime.Rating)
+                    </td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
                         <td>
-                            @counter
+                            @Model.UserAnimeList[counter - 1].UserRating
                         </td>
                         <td>
-                            @Html.DisplayFor(model => anime.Title)
+                            @if (@Model.UserAnimeList[counter - 1].CompleteStatus == 0)
+                            {
+                                <button>Add anime</button>
+                            }
+                            else
+                            {
+                                @Model.UserAnimeList[counter - 1].CompleteStatus
+                            }
                         </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
+                    }
+                </tr>
                 }
             </tbody>
         </table>

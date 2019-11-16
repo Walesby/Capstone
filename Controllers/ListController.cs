@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Capstone.Context;
 using Capstone.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ namespace Capstone.Controllers
     public class ListController : Controller
     {
         private readonly IdentityContext _context;
+
         public ListController(IdentityContext context)
         {
             _context = context;
@@ -32,16 +34,23 @@ namespace Capstone.Controllers
                 var userId = user.Id;
                 var animeList = await _context.AnimeList.ToListAsync<AnimeList>();
                 var userAnimeList = new List<AnimeItem>();
+                var userScores = new List<AnimeList>();
                 foreach (var anime in animeList)
                 {
                     if (anime.UserId == userId)
                     {
                         var item = await _context.AnimeItem.FirstOrDefaultAsync(a => a.Id == anime.AnimeItemId);
                         userAnimeList.Add(item);
+                        userScores.Add(anime);
                     }
                 }
-                
-                return View(userAnimeList);
+                var viewModel = new UserAnimeListViewModel
+                {
+                    User = user,
+                    AnimeInfoList = userAnimeList,
+                    UserAnimeList = userScores
+                };
+                return View(viewModel);
             }
         }
     }

@@ -4,14 +4,16 @@ using Capstone.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Capstone.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20191115012628_UpdatedAnimeListModel")]
+    partial class UpdatedAnimeListModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,31 +149,6 @@ namespace Capstone.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("NovelItem");
-                });
-
-            modelBuilder.Entity("Capstone.Models.Reviews", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AnimeItemId");
-
-                    b.Property<DateTime>("PostDate");
-
-                    b.Property<int>("Rating");
-
-                    b.Property<string>("Review");
-
-                    b.Property<Guid>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnimeItemId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Capstone.Models.Role", b =>
@@ -357,19 +334,6 @@ namespace Capstone.Migrations
 
                     b.HasOne("Capstone.Models.User", "User")
                         .WithMany("AnimeList")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Capstone.Models.Reviews", b =>
-                {
-                    b.HasOne("Capstone.Models.AnimeItem", "Anime")
-                        .WithMany("Reviews")
-                        .HasForeignKey("AnimeItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Capstone.Models.User", "User")
-                        .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model Capstone.Models.ReviewsViewModel
 @{
     ViewData["Title"] = "anime reviews";
     Layout = "/Views/Shared/_Layout.cshtml";
@@ -10,16 +11,24 @@
         <h1>Anime Reviews</h1>
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
-        <h4>Insert Anime Title</h4>
-        <p>Username: Johnny</p>
-        <p>Date: 1970/12/31</p>
-        <p>Progress: 24/24</p>
-        <p>Rating: 5/10</p>
+@{ 
+    var counter = 0;
+}
+@foreach (var review in Model.ReviewsList)
+{
+    var animeId = review.AnimeItemId;
+    var userId = review.UserId;
+    counter += 1;
+    <div class="row">
+        <div class="col-12">
+            <a asp-controller="Anime" asp-action="Item" asp-route-id="@animeId">@Model.AnimeInfoList[counter-1].Title</a>
+            <a asp-controller="Profile" asp-action="User" asp-route-username="@Model.UserList[counter-1].UserName">@Model.UserList[counter - 1].UserName</a>
+            <p>Date: @review.PostDate</p>
+            <p>Rating: @review.Rating</p>
+        </div>
+        <div class="col-12">
+            <p>@review.Review</p>
+        </div>
     </div>
-    <div class="col-12">
-        <p>This is my super good review of a series that is only a 5/10</p>
-    </div>
-</div>
+}
 

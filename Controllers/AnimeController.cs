@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Capstone.Context;
 using Capstone.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +31,25 @@ namespace Capstone.Controllers
             }
             else
             {
-                return View(anime);
+                var reviewList = await _context.Reviews.ToListAsync<Reviews>();
+                var users = new List<User>();
+                var reviewsOfAnime = new List<Reviews>();
+                foreach(var review in reviewList)
+                {
+                    if (review.AnimeItemId == anime.Id)
+                    {
+                        var user = await _context.User.FirstOrDefaultAsync(a => a.Id == review.UserId);
+                        users.Add(user);
+                        reviewsOfAnime.Add(review);
+                    }
+                }
+                var viewModel = new AnimeItemViewModel
+                {
+                    Anime = anime,
+                    UserList = users,
+                    ReviewsList = reviewsOfAnime
+                };
+                return View(viewModel);
             }
         }
         public async Task<IActionResult> Search(string animeTitle)
@@ -48,14 +68,64 @@ namespace Capstone.Controllers
                 return View(anime);
             }
         }
-        public IActionResult Reviews()
+        public async Task<IActionResult> Reviews()
         {
-            return View();
+            var reviewList = await _context.Reviews.ToListAsync<Reviews>();
+            var users = new List<User>();
+            var animes = new List<AnimeItem>();
+            foreach (var review in reviewList)
+            {
+                var user = await _context.User.FirstOrDefaultAsync(a => a.Id == review.UserId);
+                var anime = await _context.AnimeItem.FirstOrDefaultAsync(a => a.Id == review.AnimeItemId);
+                users.Add(user);
+                animes.Add(anime);
+            }
+            var viewModel = new ReviewsViewModel
+            {
+                UserList = users,
+                AnimeInfoList = animes,
+                ReviewsList = reviewList
+
+            };
+            return View(viewModel);
         }
         public async Task<IActionResult> Top()
         {
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            if (username == null)
+            {
+                var noUserViewModel = new UserAnimeListViewModel();
+                var topAnimeNoUserList = await _context.AnimeItem.ToListAsync<AnimeItem>();
+                noUserViewModel.AnimeInfoList = topAnimeNoUserList;
+                return View(noUserViewModel);
+            }
+            var user = await _context.User.FirstOrDefaultAsync(a => a.UserName == username);
+            var userId = user.Id;
             var animeList = await _context.AnimeItem.ToListAsync<AnimeItem>();
-            return View(animeList);
+            var userStats = new List<AnimeList>();
+            foreach (var anime in animeList)
+            {
+                var userScore = await _context.AnimeList.FirstOrDefaultAsync(a => a.AnimeItemId == anime.Id && a.UserId == userId);
+                if (userScore == null)
+                {
+                    var notOnList = new AnimeList();
+                    notOnList.UserRating = 0;
+                    notOnList.UserProgress = 0;
+                    notOnList.CompleteStatus = 0;
+                    userStats.Add(notOnList);
+                }
+                else
+                {
+                    userStats.Add(userScore);
+                }
+            }
+            var viewModel = new UserAnimeListViewModel
+            {
+                User = user,
+                AnimeInfoList = animeList,
+                UserAnimeList = userStats
+            };
+            return View(viewModel);
         }
     }
 }
