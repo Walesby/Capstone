@@ -52,21 +52,56 @@ namespace Capstone.Controllers
                 return View(viewModel);
             }
         }
-        public async Task<IActionResult> Search(string animeTitle)
+        public IActionResult Search()
         {
-            if (animeTitle == null)
+            return View();
+        }
+        public async Task<IActionResult> SearchResults(string animeTitle, string startingLetter, string genre)
+        {
+            if (animeTitle == null && startingLetter == null && genre == null)
             {
                 return View();
             }
-            var anime = await _context.AnimeItem.FirstOrDefaultAsync(a => a.Title == animeTitle);
-            if (anime == null)
+
+            if (animeTitle != null)
             {
-                return NotFound();
+                animeTitle = animeTitle.ToLower();
+                var animeList = await _context.AnimeItem.ToListAsync<AnimeItem>();
+                var searchResultAnimeList = new List<AnimeItem>();
+                foreach (var anime in animeList)
+                {
+                    if (anime.Title.ToLower().Contains(animeTitle))
+                    {
+                        searchResultAnimeList.Add(anime);
+                    }
+                }
+                return View(searchResultAnimeList);
             }
+
+            else if (startingLetter != null)
+            {
+                var animeList = await _context.AnimeItem.ToListAsync<AnimeItem>();
+                var searchResultAnimeList = new List<AnimeItem>();
+                foreach (var anime in animeList)
+                {
+                    if (anime.Title.StartsWith(startingLetter))
+                    {
+                        searchResultAnimeList.Add(anime);
+                    }
+                }
+                return View(searchResultAnimeList);
+            }
+
+            else if (genre != null)
+            {
+                return View();
+            }
+
             else
             {
-                return View(anime);
+                return View();
             }
+
         }
         public async Task<IActionResult> Reviews()
         {
@@ -89,6 +124,7 @@ namespace Capstone.Controllers
             };
             return View(viewModel);
         }
+
         public async Task<IActionResult> Top()
         {
             var username = User.FindFirstValue(ClaimTypes.Name);

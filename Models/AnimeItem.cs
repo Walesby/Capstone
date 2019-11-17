@@ -23,6 +23,7 @@ namespace Capstone.Models
         public double Rating { get; set; }
         public int Popularity { get; set; }
         public string Synopsis { get; set; }
+        public string ImagePath { get; set; }
 
         public virtual ICollection<AnimeList> AnimeLists { get; set; }
         public virtual ICollection<Reviews> Reviews { get; set; }

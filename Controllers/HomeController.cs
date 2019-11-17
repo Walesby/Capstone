@@ -5,14 +5,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Capstone.Models;
+using Capstone.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Capstone.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IdentityContext _context;
+        public HomeController(IdentityContext context)
         {
-            return View();
+            _context = context;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var reviewList = await _context.Reviews.ToListAsync<Reviews>();
+            var animeList = await _context.AnimeItem.ToListAsync<AnimeItem>();
+            var newestAnime = new List<AnimeItem>();
+            var mostPopularAnime = new List<AnimeItem>();
+            foreach (var anime in animeList)
+            {
+                if (anime.Popularity <= 5)
+                {
+                    mostPopularAnime.Add(anime);
+                }
+            }
+            var homeViewModel = new HomePageViewModel();
+            homeViewModel.NewestReviews = reviewList;
+            homeViewModel.NewestAnime = animeList;
+            homeViewModel.HighestRated = mostPopularAnime;
+            return View(homeViewModel);
         }
 
         public IActionResult Privacy()

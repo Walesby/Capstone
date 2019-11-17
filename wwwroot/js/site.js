@@ -5,7 +5,7 @@
 $(document).ready(function () {
     $('#responsive1,#responsive2,#responsive3').lightSlider({
         item: 4.5,
-        loop: false,
+        loop: true,
         slideMove: 2,
         easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
         speed: 600,

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Capstone.Models.HomePageViewModel
+@{
     ViewData["Title"] = "Home Page";
     <link rel="stylesheet" href="~/css/home.css" />
 }
@@ -6,64 +7,29 @@
     <div class="col-sm-12 col-md-12 col-lg-8" id="animerelease">
         <h3>Anime Releases</h3>
         <ul id="responsive1">
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" max-width="100%"/>
-            </li>
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <span class="title">Re Zero</span>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
+            @foreach (var anime in Model.NewestAnime)
+            {
+                <li>
+                    <a asp-controller="Anime" asp-action="Item" asp-route-id="@anime.Id">
+                        <span class="title">@anime.Title</span>
+                        <img src="@anime.ImagePath" width="160" height="220" />
+                    </a>
+                </li>
+            }
         </ul>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4" id="popularanime">
         <h3>Most Popular Anime</h3>
         <ul id="responsivepopular1">
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
+            @foreach (var anime in Model.HighestRated)
+            {
+            <li>                
+                <a asp-controller="Anime" asp-action="Item" asp-route-id="@anime.Id">
+                    <span class="title">@anime.Title</span>
+                    <img src="@anime.ImagePath" width="160" height="220" />
+                </a>
             </li>
-            <li>
-                <img src="~/img/attack on titan_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/psychopass_tn.jpg" />
-            </li>
+            }
         </ul>
     </div>
 </div>
@@ -71,53 +37,25 @@
     <div class="col-sm-12 col-md-12 col-lg-8" id="mangarelease">
         <h3>Manga Releases</h3>
         <ul id="responsive2">
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
+            @foreach (var anime in Model.NewestAnime)
+            {
+                <li>
+                    <span class="title">@anime.Title</span>
+                    <img src="@anime.ImagePath" width="160" height="220" />
+                </li>
+            }
         </ul>
     </div>
     <div class="col-4" id="popularmanga">
         <h3>Most Popular Manga</h3>
         <ul id="responsivepopular2">
-            <li>
-                <img src="~/img/aot_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/liargame_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/berserk_tn.jpg" />
-            </li>
+            @foreach (var anime in Model.HighestRated)
+            {
+                <li>
+                    <span class="title">@anime.Title</span>
+                    <img src="@anime.ImagePath" width="160" height="220" />
+                </li>
+            }
         </ul>
     </div>
 </div>
@@ -125,53 +63,25 @@
     <div class="col-sm-12 col-md-12 col-lg-8" id="novelrelease">
         <h3>Light Novel Releases</h3>
         <ul id="responsive3">
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
+            @foreach (var anime in Model.NewestAnime)
+            {
+                <li>
+                    <span class="title">@anime.Title</span>
+                    <img src="@anime.ImagePath" width="160" height="220" />
+                </li>
+            }
         </ul>
     </div>
     <div class="col-4" id="popularnovel">
         <h3>Most Popular Light Novels</h3>
         <ul id="responsivepopular3">
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
-            <li>
-                <img src="~/img/rezero_tn.jpg" />
-            </li>
+            @foreach (var anime in Model.HighestRated)
+            {
+                <li>
+                    <span class="title">@anime.Title</span>
+                    <img src="@anime.ImagePath" width="160" height="220" />
+                </li>
+            }
         </ul>
     </div>
 </div>
