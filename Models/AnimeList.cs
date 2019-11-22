@@ -7,7 +7,7 @@ namespace Capstone.Models
 {
     public enum CompleteStatus
     {
-        complete,watching,plan
+        add,complete,watching,plan
     }
     public class AnimeList
     {

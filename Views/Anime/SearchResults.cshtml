@@ -59,7 +59,7 @@
     {
         <div class="row">
             <div class="col-12">
-                <p>@anime.Title</p>
+                <a asp-controller="Anime" asp-action="Item" asp-route-id="@anime.Id">@anime.Title</a>
             </div>
         </div>
     }

@@ -31,25 +31,55 @@ namespace Capstone.Controllers
             }
             else
             {
-                var reviewList = await _context.Reviews.ToListAsync<Reviews>();
-                var users = new List<User>();
-                var reviewsOfAnime = new List<Reviews>();
-                foreach(var review in reviewList)
+                var name = User.FindFirstValue(ClaimTypes.Name);
+                if (name == null)
                 {
-                    if (review.AnimeItemId == anime.Id)
+                    var reviewList = await _context.Reviews.Where(a => a.AnimeItemId == anime.Id).OrderByDescending(a => a.Id).Take(5).ToListAsync<Reviews>();
+
+                    var users = new List<User>();
+                    foreach (var review in reviewList)
                     {
-                        var user = await _context.User.FirstOrDefaultAsync(a => a.Id == review.UserId);
-                        users.Add(user);
-                        reviewsOfAnime.Add(review);
+                        var username = await _context.User.FirstOrDefaultAsync(a => a.Id == review.UserId);
+                        users.Add(username);
                     }
+                    var viewModel = new AnimeItemViewModel
+                    {
+                        Anime = anime,
+                        UserList = users,
+                        ReviewsList = reviewList
+                    };
+                    return View(viewModel);
                 }
-                var viewModel = new AnimeItemViewModel
+                else
                 {
-                    Anime = anime,
-                    UserList = users,
-                    ReviewsList = reviewsOfAnime
-                };
-                return View(viewModel);
+                    var user = await _context.User.FirstOrDefaultAsync(a => a.UserName == name);
+                    var animeList = await _context.AnimeList.Where(a => a.UserId == user.Id).ToListAsync();
+                    bool onList = false;
+                    foreach (var animeListItem in animeList)
+                    {
+                        if (animeListItem.AnimeItemId == anime.Id)
+                        {
+                            onList = true;
+                        }
+                    }
+
+                    var reviewList = await _context.Reviews.Where(a => a.AnimeItemId == anime.Id).OrderByDescending(a => a.Id).Take(5).ToListAsync<Reviews>();
+
+                    var users = new List<User>();
+                    foreach (var review in reviewList)
+                    {
+                        var username = await _context.User.FirstOrDefaultAsync(a => a.Id == review.UserId);
+                        users.Add(username);
+                    }
+                    var viewModel = new AnimeItemViewModel
+                    {
+                        Anime = anime,
+                        UserList = users,
+                        ReviewsList = reviewList,
+                        UserListContains = onList
+                    };
+                    return View(viewModel);
+                }
             }
         }
         public IActionResult Search()
@@ -60,7 +90,8 @@ namespace Capstone.Controllers
         {
             if (animeTitle == null && startingLetter == null && genre == null)
             {
-                return View();
+                var emptyAnimeList = new List<AnimeItem>();
+                return View(emptyAnimeList);
             }
 
             if (animeTitle != null)
@@ -94,18 +125,20 @@ namespace Capstone.Controllers
 
             else if (genre != null)
             {
-                return View();
+                var emptyAnimeList = new List<AnimeItem>();
+                return View(emptyAnimeList);
             }
 
             else
             {
-                return View();
+                var emptyAnimeList = new List<AnimeItem>();
+                return View(emptyAnimeList);
             }
 
         }
         public async Task<IActionResult> Reviews()
         {
-            var reviewList = await _context.Reviews.ToListAsync<Reviews>();
+            var reviewList = await _context.Reviews.OrderByDescending(a => a.Id).ToListAsync<Reviews>();
             var users = new List<User>();
             var animes = new List<AnimeItem>();
             foreach (var review in reviewList)
@@ -131,13 +164,13 @@ namespace Capstone.Controllers
             if (username == null)
             {
                 var noUserViewModel = new UserAnimeListViewModel();
-                var topAnimeNoUserList = await _context.AnimeItem.ToListAsync<AnimeItem>();
+                var topAnimeNoUserList = await _context.AnimeItem.OrderByDescending(a => a.Rating).ToListAsync<AnimeItem>();
                 noUserViewModel.AnimeInfoList = topAnimeNoUserList;
                 return View(noUserViewModel);
             }
             var user = await _context.User.FirstOrDefaultAsync(a => a.UserName == username);
             var userId = user.Id;
-            var animeList = await _context.AnimeItem.ToListAsync<AnimeItem>();
+            var animeList = await _context.AnimeItem.OrderByDescending(a => a.Rating).ToListAsync<AnimeItem>();
             var userStats = new List<AnimeList>();
             foreach (var anime in animeList)
             {

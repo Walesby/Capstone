@@ -1,0 +1,82 @@
+﻿@section Scripts{
+    <script src="~/js/AdminAdd.js"></script>
+}
+@{
+    ViewData["Title"] = "CreateAnime";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <h3>Create new item</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Collection type:</label>
+                <select class="form-control" id="collectiontype">
+                    <option value="Anime">Anime</option>
+                    <option value="Manga">Manga</option>
+                    <option value="Light Novel">Novel</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Title:</label>
+                <input class="form-control" id="title" type="text" />
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Episodes / Chapters:</label>
+                <input class="form-control" id="episodes" type="number" />
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Status:</label>
+                <select class="form-control" id="status">
+                    <option value="Completed">Completed</option>
+                    <option value="Airing">Airing</option>
+                    <option value="On-Hold">On-hold</option>
+                    <option value="Announced">Announced</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Season Premiered:</label>
+                <select class="form-control" id="seasonpremiered">
+                    <option value="Spring">Spring</option>
+                    <option value="Summer">Summer</option>
+                    <option value="Fall">Fall</option>
+                    <option value="Winter">Winter</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Year Premiered:</label>
+                <input class="form-control" id="yearpremiered" type="number" />
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Source material:</label>
+                <select class="form-control" id="source">
+                    <option value="Anime">Anime</option>
+                    <option value="Manga">Manga</option>
+                    <option value="Light Novel">Light Novel</option>
+                    <option value="Original">Original</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Viewer rating: </label>
+                <select class="form-control" id="agerating">
+                    <option value="G">G</option>
+                    <option value="PG">PG</option>
+                    <option value="PG-13">PG-13</option>
+                    <option value="R">R</option>
+                    <option value="NC-17">NC-17</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="synopsis">Synopsis: </label>
+                <input class="form-control" type="text" id="synopsis" />
+            </div>
+            <button type="button" class="btn btn-primary" id="additem">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </form>
+    </div>
+</div>
+

@@ -1,6 +1,9 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@section Scripts{
+    <script src="~/js/TopAnime.js"></script>
+}
 @model Capstone.Models.UserAnimeListViewModel
 @{
     ViewData["Title"] = $"Top Anime";
@@ -28,33 +31,34 @@
                 {
                     var animeId = anime.Id;
                     counter += 1;
-                <tr>
-                    <td>
-                        @counter
-                    </td>
-                    <td>
-                        <a asp-controller="Anime" asp-action="Item" asp-route-id="@animeId">@Html.DisplayFor(model => anime.Title)</a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => anime.Rating)
-                    </td>
-                    @if (User.Identity.IsAuthenticated)
-                    {
+                    <tr>
                         <td>
-                            @Model.UserAnimeList[counter - 1].UserRating
+                            @counter
                         </td>
                         <td>
-                            @if (@Model.UserAnimeList[counter - 1].CompleteStatus == 0)
-                            {
-                                <button>Add anime</button>
-                            }
-                            else
-                            {
-                                @Model.UserAnimeList[counter - 1].CompleteStatus
-                            }
+                            <a asp-controller="Anime" asp-action="Item" asp-route-id="@animeId">@Html.DisplayFor(model => anime.Title)</a>
+                            <input type="hidden" id="animeid" value="@animeId" />
                         </td>
-                    }
-                </tr>
+                        <td>
+                            @Html.DisplayFor(model => anime.Rating)
+                        </td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <td>
+                                @Model.UserAnimeList[counter - 1].UserRating
+                            </td>
+                            <td>
+                                @if (@Model.UserAnimeList[counter - 1].CompleteStatus == 0)
+                                {
+                                    <button type="button" class="btn btn-primary addanime" value="@animeId">Add anime</button>
+                                }
+                                else
+                                {
+                                    @Model.UserAnimeList[counter - 1].CompleteStatus
+                                }
+                            </td>
+                        }
+                    </tr>
                 }
             </tbody>
         </table>

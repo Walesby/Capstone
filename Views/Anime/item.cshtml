@@ -1,5 +1,5 @@
 ﻿@model Capstone.Models.AnimeItemViewModel
-@section Scripts{ 
+@section Scripts{
     <script src="~/js/AnimeItem.js"></script>
 }
 @{
@@ -18,15 +18,25 @@
                 <img src="@Model.Anime.ImagePath" width="225" height="318" />
             </div>
         </div>
-        <div class="row" id="addbuttons">
-            <div class="col-12">
-                <button type="button" class="btn btn-dark btn-block">Add to list</button>
-            </div>
-            <div class="col-12">
-                <button type="button" class="btn btn-dark btn-block">Add to favorites</button>
-            </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="row" id="addbuttons">
+                <div class="col-12">
+                    @if (Model.UserListContains == true)
+                    {
+                        <button type="button" class="btn btn-dark btn-block" id="addremovefromlist">Remove from list</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-dark btn-block" id="addremovefromlist">Add to list</button>
+                    }
+                </div>
+                <div class="col-12">
+                    <button type="button" class="btn btn-dark btn-block">Add to favorites</button>
+                </div>
 
-        </div>
+            </div>
+        }
         <dl class="row" id="info">
             <dt class="col-sm-6">
                 @Html.DisplayNameFor(model => model.Anime.Type)
@@ -47,12 +57,6 @@
                 @Html.DisplayFor(model => model.Anime.Status)
             </dd>
             <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Anime.Aired)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Anime.Aired)
-            </dd>
-            <dt class="col-sm-6">
                 @Html.DisplayNameFor(model => model.Anime.Premiered)
             </dt>
             <dd class="col-sm-6">
@@ -63,12 +67,6 @@
             </dt>
             <dd class="col-sm-6">
                 @Html.DisplayFor(model => model.Anime.Source)
-            </dd>
-            <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Anime.EpisodeDuration)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Anime.EpisodeDuration)
             </dd>
             <dt class="col-sm-6">
                 @Html.DisplayNameFor(model => model.Anime.RecommendedAge)
@@ -156,9 +154,9 @@
                 <div class="col-3">
                     <h5>Status</h5>
                     <select>
-                        <option value="plantowatch">Plan to watch</option>
-                        <option value="watching">Watching</option>
-                        <option value="complete">Complete</option>
+                        <option value="3">Plan to watch</option>
+                        <option value="2">Watching</option>
+                        <option value="1">Complete</option>
                     </select>
                 </div>
                 <div class="col-3">
@@ -172,7 +170,7 @@
                 </div>
                 <div class="col-3">
                     <h5>Episodes Watched</h5>
-                    <input type="number" />
+                    <input type="number" min="0" max="@Model.Anime.EpisodeCount" />
                 </div>
                 <div class="col-3">
                     <h5>Add / Remove from list</h5>
@@ -190,36 +188,6 @@
                 <p>@Html.DisplayFor(model => model.Anime.Synopsis)</p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-8">
-                <h3>Reviews</h3>
-            </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="col-4">
-                    <button class="btn btn-dark btn-block" data-toggle="modal" data-target="#reviewModal">Add Review</button>
-                </div>
-            }
-
-        </div>
-        @{
-            var counter = 0;
-        }
-        @foreach (var review in Model.ReviewsList)
-        {
-            var userName = Model.UserList[counter].UserName;
-            counter += 1;
-            <div class="row">
-                <div class="col-12">
-                    <a asp-controller="Profile" asp-action="User" asp-route-username="@userName">@userName</a>
-                    <p>Date: @review.PostDate</p>
-                    <p>Rating: @review.Rating</p>
-                </div>
-                <div class="col-12">
-                    <p>@review.Review</p>
-                </div>
-            </div>
-        }
         <div class="row">
             <div class="col-12">
                 <h3>Recommendations</h3>
@@ -243,6 +211,37 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-8">
+                <h3>Reviews</h3>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="col-4">
+                    <button class="btn btn-dark btn-block" data-toggle="modal" data-target="#reviewModal">Add Review</button>
+                </div>
+            }
+
+        </div>
+        @{
+            var counter = 0;
+        }
+        @foreach (var review in Model.ReviewsList)
+        {
+            var userName = Model.UserList[counter].UserName;
+            counter += 1;
+            <div class="row" id="review@(counter)">
+                <div class="reviewinfo col-12">
+                    <a asp-controller="Profile" asp-action="User" asp-route-username="@userName">@userName</a>
+                    <p>Date: @review.PostDate</p>
+                    <p>Rating: @review.Rating / 10</p>
+                </div>
+                <div class="reviewbody col-12">
+                    <p>@review.Review</p>
+                </div>
+            </div>
+        }
+
     </div>
 </div>
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -257,8 +256,12 @@
             <form asp-controller="Crud" asp-action="PostReview" method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Rating: </label>
-                        <input type="number" class="form-control" id="rating" min="1" max="10" name="rating">
+                        <select class="form-control" id="rating">
+                            @for (var i = 1; i <= 10; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="review">Review: </label>
@@ -268,8 +271,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="submitreview">Submit Review</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="submitreview">Submit Review</button>
                 </div>
             </form>
         </div>

@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace Capstone.Models
 {
-    public class AnimeItemViewModel
+    public class UserReviewViewModel
     {
-        public AnimeItem Anime { get; set; }
-        public List<User> UserList { get; set; }
+        public List<string> UsernameList { get; set; }
         public List<Reviews> ReviewsList { get; set; }
-        public bool UserListContains { get; set; }
     }
 }

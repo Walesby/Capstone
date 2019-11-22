@@ -1,0 +1,30 @@
+﻿@model Capstone.Models.ReviewsViewModel
+@{
+    ViewData["Title"] = "reviews";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <h1>@Model.UserList[0].UserName's Anime Reviews</h1>
+    </div>
+</div>
+@{
+    var counter = 0;
+}
+@foreach (var review in Model.ReviewsList)
+{
+    var animeId = review.AnimeItemId;
+    var userId = review.UserId;
+    counter += 1;
+    <div class="row">
+        <div class="col-12">
+            <a asp-controller="Anime" asp-action="Item" asp-route-id="@animeId">@Model.AnimeInfoList[counter - 1].Title</a>
+            <a asp-controller="Profile" asp-action="User" asp-route-username="@Model.UserList[counter-1].UserName">@Model.UserList[counter - 1].UserName</a>
+            <p>Date: @review.PostDate</p>
+            <p>Rating: @review.Rating</p>
+        </div>
+        <div class="col-12">
+            <p>@review.Review</p>
+        </div>
+    </div>
+}
