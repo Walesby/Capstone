@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
 }
 <div class="row">
     <div class="col-12">
@@ -10,55 +7,40 @@
 </div>
 <div class="row">
     <div class="col-12 nav">
-        <a class="nav-link" href="#">#</a>
-        <a class="nav-link" href="#">A</a>
-        <a class="nav-link" href="#">B</a>
-        <a class="nav-link" href="#">C</a>
-        <a class="nav-link" href="#">D</a>
-        <a class="nav-link" href="#">E</a>
-        <a class="nav-link" href="#">F</a>
-        <a class="nav-link" href="#">G</a>
-        <a class="nav-link" href="#">H</a>
-        <a class="nav-link" href="#">I</a>
-        <a class="nav-link" href="#">J</a>
-        <a class="nav-link" href="#">K</a>
-        <a class="nav-link" href="#">L</a>
-        <a class="nav-link" href="#">M</a>
-        <a class="nav-link" href="#">N</a>
-        <a class="nav-link" href="#">O</a>
-        <a class="nav-link" href="#">P</a>
-        <a class="nav-link" href="#">Q</a>
-        <a class="nav-link" href="#">R</a>
-        <a class="nav-link" href="#">S</a>
-        <a class="nav-link" href="#">T</a>
-        <a class="nav-link" href="#">U</a>
-        <a class="nav-link" href="#">V</a>
-        <a class="nav-link" href="#">W</a>
-        <a class="nav-link" href="#">X</a>
-        <a class="nav-link" href="#">Y</a>
-        <a class="nav-link" href="#">Z</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="A">A</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="B">B</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="C">C</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="D">D</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="E">E</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="F">F</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="G">G</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="H">H</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="I">I</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="J">J</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="K">K</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="L">L</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="M">M</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="N">N</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="O">O</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="P">P</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="Q">Q</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="R">R</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="S">S</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="T">T</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="U">U</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="V">V</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="W">W</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="X">X</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="Y">Y</a>
+        <a class="nav-link" asp-controller="Novel" asp-action="SearchResults" asp-route-startingLetter="Z">Z</a>
     </div>
 </div>
 <div class="row">
     <div class="col-12">
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form class="form-inline my-2 my-lg-0" asp-controller="Novel" asp-action="SearchResults">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="novelTitle">
+            <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
-        <h3>Rankings</h3>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <h3>Genres</h3>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <h3>Studios</h3>
-    </div>
-</div>
+

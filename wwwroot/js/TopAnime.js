@@ -10,15 +10,16 @@
             UserProgress: userProgress,
             CompleteStatus: userViewingStatus
         }
+        var closestTd = $(this).closest('td');
+
         var jsonAddToList = JSON.stringify(addToList);
-        console.log(jsonAddToList);
         $.ajax({
             url: "https://localhost:44319/api/crud/postuseranimelist",
             type: "POST",
             contentType: "application/json",
             data: jsonAddToList,
             success: function (response) {
-
+                closestTd.html("Watching");
             }
         });
     });

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Capstone.Models
 {
-    public enum CompleteStatus
+    public enum CompleteStatusAnime
     {
-        add,complete,watching,plan
+        Add,Complete,Watching
     }
     public class AnimeList
     {
@@ -16,7 +16,7 @@ namespace Capstone.Models
         public int AnimeItemId { get; set; }
         public int UserRating { get; set; }
         public int UserProgress { get; set; }
-        public CompleteStatus CompleteStatus { get; set; }
+        public CompleteStatusAnime CompleteStatus { get; set; }
 
         public virtual AnimeItem Anime { get; set; }
         public virtual User User { get; set; }

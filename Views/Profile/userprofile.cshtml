@@ -1,0 +1,213 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Capstone.ViewModels.UserProfileViewModel
+@{
+    var imagePath = Model.User.ProfileImagePath;
+    var user = Model.User.UserName;
+    ViewData["Title"] = "Profile";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    <script src="~/js/UserProfile.js"></script>
+}
+@section Styles{
+    <link href="~/css/userprofile.css" rel="stylesheet" />
+}
+<div class="row">
+    <div class="col-12">
+        <h1>@user's Profile</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <div class="row">
+            <div class="col-12">
+                <img class="img-fluid" src="@imagePath" height="225" width="225" />
+            </div>
+        </div>
+        @if (User.Identity.Name != Model.User.UserName && User.Identity.IsAuthenticated)
+        {
+            <div class="row">
+                @if (Model.UserIsFriend == true)
+                {
+                    <div class="col-6">
+                        <button type="button" class="btn btn-dark btn-block" id="addremovefriend" value="@Model.User.Id">Remove Friend</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-6">
+                        <button type="button" class="btn btn-dark btn-block" id="addremovefriend" value="@Model.User.Id">Add Friend</button>
+                    </div>
+                }
+                <div class="col-6">
+                    <button type="button" class="btn btn-dark btn-block" id="sendmessage" value="@Model.User.Id">Send Message</button>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-12">
+                <h4>Lists</h4>
+            </div>
+            <div class="col-12">
+                <a asp-controller="List" asp-action="AnimeList" asp-route-username="@user">Anime List</a>
+            </div>
+            <div class="col-12">
+                <a asp-controller="List" asp-action="MangaList" asp-route-username="@user">Manga List</a>
+            </div>
+            <div class="col-12">
+                <a asp-controller="List" asp-action="NovelList" asp-route-username="@user">Novel List</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h4>Reviews</h4>
+            </div>
+            <div class="col-12">
+                <a asp-controller="Profile" asp-action="AnimeReviews" asp-route-username="@Model.User.UserName">Anime Reviews</a>
+            </div>
+            <div class="col-12">
+                <a asp-controller="Profile" asp-action="MangaReviews" asp-route-username="@Model.User.UserName">Manga Reviews</a>
+            </div>
+            <div class="col-12">
+                <a asp-controller="Profile" asp-action="NovelReviews" asp-route-username="@Model.User.UserName">Light Novel Reviews</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="row">
+            <div class="col-6">
+                <h3>User Stats</h3>
+            </div>
+            <div class="col-6">
+                <h3>User Last Updates</h3>
+            </div>
+        </div>
+        <div class="row" id="animestats">
+            <div class="col-6">
+                <h4>Anime</h4>
+                <p>Watching: @Model.AnimeWatching</p>
+                <p>Completed: @Model.AnimeComplete</p>
+                <p>Average Rating: @Model.AnimeAverageScore</p>
+            </div>
+            <div class="col-6">
+                <h4>Anime</h4>
+                <ul class="userupdates">
+                    @if (Model.LatestAnimeUpdates != null)
+                    {
+                        @foreach (var anime in Model.LatestAnimeUpdates)
+                        {
+                            <li>
+                                <a asp-controller="Anime" asp-action="Item" asp-route-id="@anime.Id">
+                                    <span class="title">@anime.Title</span>
+                                    <img src="@anime.ImagePath" width="80" height="137" />
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="row" id="mangastats">
+            <div class="col-6">
+                <h4>Manga</h4>
+                <p>Reading: @Model.MangaReading</p>
+                <p>Completed: @Model.MangaComplete</p>
+                <p>Average Rating: @Model.MangaAverageScore</p>
+            </div>
+            <div class="col-6">
+                <h4>Manga</h4>
+                <ul class="userupdates">
+                    @if (Model.LatestMangaUpdates != null)
+                    {
+                        @foreach (var manga in Model.LatestMangaUpdates)
+                        {
+                            <li>
+                                <a asp-controller="Manga" asp-action="Item" asp-route-id="@manga.Id">
+                                    <span class="title">@manga.Title</span>
+                                    <img src="@manga.ImagePath" width="80" height="137" />
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="row" id="lightnovelstats">
+            <div class="col-6">
+                <h4>Light Novel</h4>
+                <p>Reading: @Model.NovelReading</p>
+                <p>Completed: @Model.NovelComplete</p>
+                <p>Average Rating: @Model.NovelAverageScore</p>
+            </div>
+            <div class="col-6">
+                <h4>Light Novel</h4>
+                <ul class="userupdates">
+                    @if (Model.LatestNovelUpdates != null)
+                    {
+                        foreach (var novel in Model.LatestNovelUpdates)
+                        {
+                            <li>
+                                <a asp-controller="Novel" asp-action="Item" asp-route-id="@novel.Id">
+                                    <span class="title">@novel.Title</span>
+                                    <img src="@novel.ImagePath" width="80" height="137" />
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        @if (Model.Favorite != null)
+        {
+            <div class="row">
+                <div class="col-8">
+                    <h4>Favorites</h4>
+                </div>
+                @if (User.Identity.Name == Model.User.UserName)
+                {
+                    <div class="col-4">
+                        <button type="button" class="btn btn-dark btn-block">Update Favorites</button>
+                    </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Anime</th>
+                                <th>Manga</th>
+                                <th>Light Novel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @if (Model.FavoriteAnime != null)
+                                    {
+                                        <a asp-controller="Anime" asp-action="Item" asp-route-id="@Model.FavoriteAnime.Id">@Model.FavoriteAnime.Title</a>
+                                    }
+                                </td>
+                                <td>
+                                    @if (Model.FavoriteManga != null)
+                                    {
+                                        <a asp-controller="Manga" asp-action="Item" asp-route-id="@Model.FavoriteManga.Id">@Model.FavoriteManga.Title</a>
+                                    }
+                                </td>
+                                <td>
+                                    @if (Model.FavoriteNovel != null)
+                                    {
+                                        <a asp-controller="Novel" asp-action="Item" asp-route-id="@Model.FavoriteNovel.Id">@Model.FavoriteNovel.Title</a>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

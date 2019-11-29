@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "friendlist";
+    Layout = "/Views/Shared/_Layout.cshtml";
+    var counter = 0;
+}
+@model Capstone.ViewModels.FriendListViewModel
+@section Scripts{
+    <script src="~/js/Friendlist.js"></script>
+}
+<div class="row">
+    <div class="col-10">
+        <h1>Friend List</h1>
+    </div>
+    <div class="col-2">
+        <button class="btn btn-block btn-dark">Add Friend</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Friends</th>
+                    <th>Last Anime update</th>
+                    <th>Last Manga update</th>
+                    <th>Last Novel update</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.UserList.Count >= 1)
+                {
+                    foreach (var user in Model.UserList)
+                    {
+                        var animeId = @Model.LastAnimeUpdateList[counter].Id;
+                        var animeTitle = @Model.LastAnimeUpdateList[counter].Title;
+
+                        var mangaId = @Model.LastMangaUpdateList[counter].Id;
+                        var mangaTitle = @Model.LastMangaUpdateList[counter].Title;
+
+                        var novelId = @Model.LastNovelUpdateList[counter].Id;
+                        var novelTitle = @Model.LastNovelUpdateList[counter].Title;
+                        counter += 1;
+                        <tr>
+                            <td>
+                                <a asp-controller="Profile" asp-action="UserProfile" asp-route-username="@user.UserName">@user.UserName</a>
+                            </td>
+                            <td>
+                                <a asp-controller="Anime" asp-action="Item" asp-route-id="@animeId">@animeTitle</a>
+                            </td>
+                            <td>
+                                <a asp-controller="Manga" asp-action="Item" asp-route-id="@mangaId">@mangaTitle</a>
+                            </td>
+                            <td>
+                                <a asp-controller="Novel" asp-action="Item" asp-route-id="@novelId">@novelTitle</a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-dark addanime" value="@user.Id">Send message</button>
+                                <button type="button" class="removelist btn btn-dark addanime" value="@user.Id">Remove Friend</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

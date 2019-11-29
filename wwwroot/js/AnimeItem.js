@@ -11,20 +11,19 @@
         var jsonReview = JSON.stringify(review); 
 
         $.ajax({
-            url: "https://localhost:44319/api/crud/postreview",
+            url: "https://localhost:44319/api/crud/postanimereview",
             type: "POST",
             contentType: "application/json",
             data: jsonReview,
             success: function (response) {
                 $.ajax({
-                    url: "https://localhost:44319/api/crud/getreviews/" + animeId,
+                    url: "https://localhost:44319/api/crud/getanimereviews/" + animeId,
                     type: "GET",
                     contentType: "application/json",
                     success: function (response) {
-                        var responseLength = response.usernameList.length;
-                        for (var i = 1; i <= responseLength; i++) {
-                            $(`#review${i}`).empty();
-                            addReview(response.reviewsList[i - 1], `#review${i}`, response.usernameList[i - 1]);
+                        var responseLength = response.reviewsList.length;
+                        for (var i = 0; i < responseLength; i++) {
+                            addReview(response.reviewsList[i], `${i + 1}`, response.usernameList[i], response.userImageUrl[i]);
                         }
                     }
                 });
@@ -54,7 +53,6 @@
                 contentType: "application/json",
                 data: jsonAddToList,
                 success: function (response) {
-                    alert("Ye");
                 }
             });
         }
@@ -70,13 +68,68 @@
             });
         }
     });
+
+    $("#addremovefromfavorites").click(function () {
+        var addOrRemoveStatus = $("#addremovefromfavorites").html();
+        if (addOrRemoveStatus == "Make favorite") {
+            $("#addremovefromfavorites").html("Remove favorite");
+            var animeId = $("#animeId").val();
+
+            $.ajax({
+                url: "https://localhost:44319/api/crud/putfavoriteanime/" + animeId,
+                type: "PUT",
+                contentType: "application/json",
+                success: function (response) {
+                }
+            });
+        }
+
+        else if (addOrRemoveStatus == "Remove favorite") {
+            $("#addremovefromfavorites").html("Make favorite");
+            $.ajax({
+                url: "https://localhost:44319/api/crud/putfavoriteanime/" + 0,
+                type: "PUT",
+                success: function (response) {
+                }
+            });
+        }
+    });
 });
 
-function addReview(review, divId, username) {
-    $(`${divId}`).append("<div class=\"reviewinfo col-12\"></div>");
-    $(`${divId}`).append("<div class=\"reviewbody col-12\"></div>");
-    $(`${divId} > .reviewinfo`).append(`<a href="/Profile/User?username=${username}">${username}</a>`);
-    $(`${divId} > .reviewinfo`).append(`<p>Date: ${review.postDate}`);
-    $(`${divId} > .reviewinfo`).append(`<p>Rating: ${review.rating} / 10`);
-    $(`${divId} > .reviewbody`).append(`<p>${review.review}`);
+function addReview(review, divId, username, profileImage) {
+    var date = new Date(review.postDate);
+    var month = (date.getMonth() + 1);
+    var day = '/' + date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+    var amOrPm = 'PM';
+    if (hours % 12 === hours) {
+        amOrPm = 'AM';
+    }
+    else {
+        hours = hours % 12;
+    }
+    if (minutes < 10) {
+        minutes = '0' + minutes;
+    }
+    if (seconds < 10) {
+        seconds = '0' + seconds;
+    }
+    var time = hours + ':' + minutes + ':' + seconds + ' ' + amOrPm; 
+    var year = '/' + date.getFullYear();
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        month = '0' + month;
+    }
+    var fullDate = month + day + year + ' ' + time;
+    $(`#review${divId}`).css('visibility', 'visible');
+    $(`#reviewuser${divId}`).html(`<b>User: </b><a href="/Profile/UserProfile?username=${username}">${username}</a>`);
+    $(`#reviewrating${divId}`).html(`<b>Rating: </b> ${review.rating} / 10`);
+    $(`#reviewdate${divId}`).html(`<b>Date: </b> ${fullDate}`);
+    $(`#reviewbody${divId}`).html(`${review.review}`);
+    $(`#reviewimage${divId}`).attr("src", profileImage);
 }
+

@@ -5,17 +5,19 @@
 @{
     ViewData["Title"] = "item";
     Layout = "/Views/Shared/_Layout.cshtml";
+    <link rel="stylesheet" href="~/css/Animeitem.css" />
 }
 <div class="row">
     <div class="col-12">
         <h1>Series: @Html.DisplayFor(model => model.Anime.Title)</h1>
     </div>
 </div>
+
 <div class="row">
     <div class="col-3">
         <div class="row" id="animeimage">
             <div class="col-12">
-                <img src="@Model.Anime.ImagePath" width="225" height="318" />
+                <img src="@Model.Anime.ImagePath" class="img-fluid mx-auto d-block" width="225" height="318" />
             </div>
         </div>
         @if (User.Identity.IsAuthenticated)
@@ -32,170 +34,139 @@
                     }
                 </div>
                 <div class="col-12">
-                    <button type="button" class="btn btn-dark btn-block">Add to favorites</button>
+                    @if (Model.UserFavoriteContains == true)
+                    {
+                        <button type="button" class="btn btn-dark btn-block" id="addremovefromfavorites">Remove favorite</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-dark btn-block" id="addremovefromfavorites">Make favorite</button>
+                    }
                 </div>
 
             </div>
         }
-        <dl class="row" id="info">
-            <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Anime.Type)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Anime.Type)
-            </dd>
-            <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Anime.EpisodeCount)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Anime.EpisodeCount)
-            </dd>
-            <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Anime.Status)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Anime.Status)
-            </dd>
-            <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Anime.Premiered)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Anime.Premiered)
-            </dd>
-            <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Anime.Source)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Anime.Source)
-            </dd>
-            <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Anime.RecommendedAge)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Anime.RecommendedAge)
-            </dd>
-            <dt class="col-sm-6">
-                @Html.DisplayNameFor(model => model.Anime.Rating)
-            </dt>
-            <dd class="col-sm-6">
-                @Html.DisplayFor(model => model.Anime.Rating)
-            </dd>
-        </dl>
-    </div>
-    <div class="col-9">
-        <h3>Stats</h3>
-        <div class="row" id="stats">
-            <div class="col-2">
-                <dl class="row" id="info">
-                    <dt class="col-sm-8">
-                        @Html.DisplayNameFor(model => model.Anime.Rating)
-                    </dt>
-                </dl>
-                <dl class="row" id="info">
-                    <dd class="col-sm-4">
-                        @Html.DisplayFor(model => model.Anime.Rating)
-                    </dd>
-                </dl>
-            </div>
-            <div class="col-10">
+        <div class="row" id="info">
+            <div class="col-12">
                 <div class="row">
                     <div class="col-4">
-                        <dl class="row" id="info">
-                            <dt class="col-sm-8">
-                                @Html.DisplayNameFor(model => model.Anime.Popularity)
-                            </dt>
-                            <dd class="col-sm-4">
-                                @Html.DisplayFor(model => model.Anime.Popularity)
-                            </dd>
-                        </dl>
+                        <p><b>Type:</b></p>
                     </div>
-                    <div class="col-4">
-                        <p>Ranking: 1</p>
-                    </div>
-                    <div class="col-4">
-                        <p>Members: 10000</p>
+                    <div class="col-8">
+                        <p>@Html.DisplayFor(model => model.Anime.Type)</p>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-4">
-                        <dl class="row" id="info">
-                            <dt class="col-sm-8">
-                                @Html.DisplayNameFor(model => model.Anime.Premiered)
-                            </dt>
-                            <dd class="col-sm-4">
-                                @Html.DisplayFor(model => model.Anime.Premiered)
-                            </dd>
-                        </dl>
+                        <p><b>Episodes:</b></p>
                     </div>
-                    <div class="col-4">
-                        <dl class="row" id="info">
-                            <dt class="col-sm-8">
-                                @Html.DisplayNameFor(model => model.Anime.Type)
-                            </dt>
-                            <dd class="col-sm-4">
-                                @Html.DisplayFor(model => model.Anime.Type)
-                            </dd>
-                        </dl>
+                    <div class="col-8">
+                        <p>@Html.DisplayFor(model => model.Anime.EpisodeCount)</p>
                     </div>
+                </div>
+
+                <div class="row">
                     <div class="col-4">
-                        <p>Studio: White Fox</p>
+                        <p><b>Complete status: </b></p>
+                    </div>
+                    <div class="col-8">
+                        @Html.DisplayFor(model => model.Anime.Status)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <p><b>Premiered:</b></p>
+                    </div>
+                    <div class="col-8">
+                        <p>@Html.DisplayFor(model => model.Anime.Premiered)</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <p><b>Source material: </b></p>
+                    </div>
+                    <div class="col-8">
+                        <p>@Html.DisplayFor(model => model.Anime.Source)</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <p><b>Age rating: </b></p>
+                    </div>
+                    <div class="col-8">
+                        <p>@Html.DisplayFor(model => model.Anime.RecommendedAge)</p>
                     </div>
                 </div>
             </div>
         </div>
-        @if (User.Identity.IsAuthenticated)
-        {
-            <div class="row">
-                <div class="col-12">
-                    <h3>User status</h3>
+    </div>
+
+    <div class="col-9">
+        <div class="row header">
+            <div class="col-12">
+                <h3>Stats</h3>
+            </div>
+        </div>
+
+        <div class="row" id="stats">
+            <div class="col-4">
+                <div class="row" id="info">
+                    <div class="col-sm-12">
+                        <p><b>Rating</b></p>
+                    </div>
+                </div>
+                <div class="row" id="info">
+                    <div class="col-sm-12">
+                        <p>@Model.Anime.Rating</p>
+                    </div>
                 </div>
             </div>
-            <div class="row" id="userstatus">
-                <div class="col-3">
-                    <h5>Status</h5>
-                    <select>
-                        <option value="3">Plan to watch</option>
-                        <option value="2">Watching</option>
-                        <option value="1">Complete</option>
-                    </select>
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-6">
+                        <p><b>Popularity</b></p>
+                    </div>
+                    <div class="col-6">
+                        <p><b>Members</b></p>
+                    </div>
                 </div>
-                <div class="col-3">
-                    <h5>Rating</h5>
-                    <select>
-                        @for (var i = 1; i <= 10; i++)
-                        {
-                            <option value="@i">@i</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-3">
-                    <h5>Episodes Watched</h5>
-                    <input type="number" min="0" max="@Model.Anime.EpisodeCount" />
-                </div>
-                <div class="col-3">
-                    <h5>Add / Remove from list</h5>
-                    <button type="button" class="btn btn-dark btn-block">Add</button>
+
+                <div class="row">
+                    <div class="col-6">
+                        <p>@Model.Anime.Popularity</p>
+                    </div>
+                    <div class="col-6">
+                        <p>@Model.Anime.Members</p>
+                    </div>
                 </div>
             </div>
-        }
-        <div class="row">
+        </div>
+
+        <div class="header row">
             <div class="col-12">
                 <h3>Synopsis</h3>
             </div>
         </div>
+
         <div class="row" id="synopsis">
             <div class="col-12">
                 <p>@Html.DisplayFor(model => model.Anime.Synopsis)</p>
             </div>
         </div>
-        <div class="row">
+
+        <div class="header row">
             <div class="col-12">
                 <h3>Recommendations</h3>
             </div>
         </div>
+
         <div class="row" id="recommendations">
             <div class="col-2">
-                <img src="~/img/rezero.jpg" width="100" />
+                <img src="~/img/Anime/rezero.jpg" class="img-thumbnail" width="100" />
             </div>
             <div class="col-10">
                 <div class="row">
@@ -211,39 +182,107 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="header row">
             <div class="col-8">
                 <h3>Reviews</h3>
             </div>
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="col-4">
-                    <button class="btn btn-dark btn-block" data-toggle="modal" data-target="#reviewModal">Add Review</button>
+                    <button class="btn-sm btn-dark btn-block" data-toggle="modal" data-target="#reviewModal">Add Review</button>
                 </div>
             }
-
         </div>
-        @{
-            var counter = 0;
-        }
-        @foreach (var review in Model.ReviewsList)
-        {
-            var userName = Model.UserList[counter].UserName;
-            counter += 1;
-            <div class="row" id="review@(counter)">
-                <div class="reviewinfo col-12">
-                    <a asp-controller="Profile" asp-action="User" asp-route-username="@userName">@userName</a>
-                    <p>Date: @review.PostDate</p>
-                    <p>Rating: @review.Rating / 10</p>
-                </div>
-                <div class="reviewbody col-12">
-                    <p>@review.Review</p>
-                </div>
-            </div>
-        }
 
+        <div class="row">
+            <div class="col-12" id="reviewsdiv">
+                @{
+                    var counter = 0;
+                }
+                @foreach (var review in Model.ReviewsList)
+                {
+                    var userName = Model.UserList[counter].UserName;
+                    counter += 1;
+                    <div class="review row" id="review@(counter)">
+                        <div class="reviewinfo col-12">
+                            <div class="row">
+                                <div class="col-1">
+                                    <img src="@Model.UserList[counter-1].ProfileImagePath" class="img-thumbnail" id="reviewimage@(counter)" width="100" />
+                                </div>
+                                <div class="col-10">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <p id="reviewuser@(counter)"><b>User:</b> <a asp-controller="Profile" asp-action="UserProfile" asp-route-username="@userName">@userName</a></p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p id="reviewrating@(counter)"><b>Rating:</b> @review.Rating</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+
+                                        </div>
+                                        <div class="col-6">
+                                            <p id="reviewdate@(counter)"><b>Date:</b> @review.PostDate</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1">
+
+                                </div>
+                                <div col-10">
+                                    <p id="reviewbody@(counter)">@review.Review</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @for (var i = Model.ReviewsList.Count; i < 5; i++)
+                {
+                    counter += 1;
+                    <div class="review row" id="review@(counter)" style="visibility: hidden;">
+                        <div class="reviewinfo col-12">
+                            <div class="row">
+                                <div class="col-1">
+                                    <img src="" class="img-thumbnail" id="reviewimage@(counter)" width="100" />
+                                </div>
+                                <div class="col-10">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <p id="reviewuser@(counter)"></p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p id="reviewrating@(counter)"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            
+                                        </div>
+                                        <div class="col-6">
+                                            <p id="reviewdate@(counter)"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1">
+
+                                </div>
+                                <div class="col-10">
+                                    <p id="reviewbody@(counter)"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </div>
+
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -253,9 +292,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form asp-controller="Crud" asp-action="PostReview" method="post">
+            <form>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label for="rating">Rating: </label>
                         <select class="form-control" id="rating">
                             @for (var i = 1; i <= 10; i++)
                             {

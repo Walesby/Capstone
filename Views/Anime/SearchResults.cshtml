@@ -44,7 +44,7 @@
     <div class="col-12">
         <form class="form-inline my-2 my-lg-0" asp-controller="Anime" asp-action="SearchResults">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="animeTitle">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
 </div>
@@ -55,14 +55,34 @@
             <h3>Results</h3>
         </div>
     </div>
-    foreach (var anime in Model)
-    {
-        <div class="row">
-            <div class="col-12">
-                <a asp-controller="Anime" asp-action="Item" asp-route-id="@anime.Id">@anime.Title</a>
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Chapters</th>
+                        <th>Rating</th>
+                        <th>Members</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var anime in Model)
+                    {
+                        <tr>
+                            <td><a asp-controller="Anime" asp-action="Item" asp-route-id="@anime.Id">@anime.Title</a></td>
+                            <td><p>@anime.Type</p></td>
+                            <td><p>@anime.EpisodeCount</p></td>
+                            <td><p>@anime.Rating</p></td>
+                            <td><p>@anime.Members</p></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-    }
+    </div>
 }
 else
 {

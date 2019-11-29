@@ -8,6 +8,7 @@ namespace Capstone.Models
     public class UserReviewViewModel
     {
         public List<string> UsernameList { get; set; }
-        public List<Reviews> ReviewsList { get; set; }
+        public List<string> UserImageUrl { get; set; }
+        public List<AnimeReviews> ReviewsList { get; set; }
     }
 }

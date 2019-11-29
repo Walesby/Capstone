@@ -9,29 +9,17 @@ namespace Capstone.Models
 {
     public class User : IdentityUser<Guid>
     {
-        [StringLength(50)]
-        public string FirstName { get; set; }
-
-        [StringLength(50)]
-        public string LastName { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime Birthday { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime JoinedDate { get; set; }
-
         public string ProfileImagePath { get; set; }
-        public char Gender { get; set; }
         public virtual ICollection<AnimeList> AnimeList { get; set; }
-        public virtual ICollection<Reviews> Reviews { get; set; }
-        //public List<MangaItem> MangaList { get; set; }
-        //public List<NovelItem> NovelList { get; set; }
-
-        //public virtual ICollection<Friend> FriendList { get; set; }
-        //public List<Message> MessageList { get; set; }
-        //public List<Favorite> Favorites { get; set; }
+        public virtual ICollection<AnimeReviews> AnimeReviews { get; set; }
+        public virtual ICollection<MangaList> MangaList { get; set; }
+        public virtual ICollection<MangaReviews> MangaReviews { get; set; }
+        public virtual ICollection<NovelList> NovelList { get; set; }
+        public virtual ICollection<NovelReviews> NovelReviews { get; set; }
+        public virtual ICollection<FriendList> UserFriends { get; set; }
+        public virtual ICollection<FriendList> FriendUsers { get; set; }
     }
 }

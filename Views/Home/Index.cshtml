@@ -21,7 +21,7 @@
     <div class="col-sm-12 col-md-12 col-lg-4" id="popularanime">
         <h3>Most Popular Anime</h3>
         <ul id="responsivepopular1">
-            @foreach (var anime in Model.HighestRated)
+            @foreach (var anime in Model.HighestRatedAnime)
             {
             <li>                
                 <a asp-controller="Anime" asp-action="Item" asp-route-id="@anime.Id">
@@ -37,11 +37,13 @@
     <div class="col-sm-12 col-md-12 col-lg-8" id="mangarelease">
         <h3>Manga Releases</h3>
         <ul id="responsive2">
-            @foreach (var anime in Model.NewestAnime)
+            @foreach (var manga in Model.NewestManga)
             {
                 <li>
-                    <span class="title">@anime.Title</span>
-                    <img src="@anime.ImagePath" width="160" height="220" />
+                    <a asp-controller="Manga" asp-action="Item" asp-route-id="@manga.Id">
+                        <span class="title">@manga.Title</span>
+                        <img src="@manga.ImagePath" width="160" height="220" />
+                    </a>
                 </li>
             }
         </ul>
@@ -49,11 +51,13 @@
     <div class="col-4" id="popularmanga">
         <h3>Most Popular Manga</h3>
         <ul id="responsivepopular2">
-            @foreach (var anime in Model.HighestRated)
+            @foreach (var manga in Model.HighestRatedManga)
             {
                 <li>
-                    <span class="title">@anime.Title</span>
-                    <img src="@anime.ImagePath" width="160" height="220" />
+                    <a asp-controller="Manga" asp-action="Item" asp-route-id="@manga.Id">
+                        <span class="title">@manga.Title</span>
+                        <img src="@manga.ImagePath" width="160" height="220" />
+                    </a>
                 </li>
             }
         </ul>
@@ -63,11 +67,13 @@
     <div class="col-sm-12 col-md-12 col-lg-8" id="novelrelease">
         <h3>Light Novel Releases</h3>
         <ul id="responsive3">
-            @foreach (var anime in Model.NewestAnime)
+            @foreach (var novel in Model.NewestNovel)
             {
                 <li>
-                    <span class="title">@anime.Title</span>
-                    <img src="@anime.ImagePath" width="160" height="220" />
+                    <a asp-controller="Novel" asp-action="Item" asp-route-id="@novel.Id">
+                        <span class="title">@novel.Title</span>
+                        <img src="@novel.ImagePath" width="160" height="220" />
+                    </a>
                 </li>
             }
         </ul>
@@ -75,19 +81,15 @@
     <div class="col-4" id="popularnovel">
         <h3>Most Popular Light Novels</h3>
         <ul id="responsivepopular3">
-            @foreach (var anime in Model.HighestRated)
+            @foreach (var novel in Model.HighestRatedNovel)
             {
                 <li>
-                    <span class="title">@anime.Title</span>
-                    <img src="@anime.ImagePath" width="160" height="220" />
+                    <a asp-controller="Novel" asp-action="Item" asp-route-id="@novel.Id">
+                        <span class="title">@novel.Title</span>
+                        <img src="@novel.ImagePath" width="160" height="220" />
+                    </a>
                 </li>
             }
         </ul>
-    </div>
-</div>
-
-<div class="row" id="reviews">
-    <div class="col-12">
-        <h1>Newest Reviews</h1>
     </div>
 </div>

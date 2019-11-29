@@ -29,6 +29,8 @@ namespace Capstone.Migrations
 
                     b.Property<string>("ImagePath");
 
+                    b.Property<int>("Members");
+
                     b.Property<int>("Popularity");
 
                     b.Property<string>("Premiered")
@@ -84,77 +86,7 @@ namespace Capstone.Migrations
                     b.ToTable("AnimeList");
                 });
 
-            modelBuilder.Entity("Capstone.Models.MangaItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Aired");
-
-                    b.Property<int>("EpisodeCount");
-
-                    b.Property<int>("EpisodeDuration");
-
-                    b.Property<int>("Popularity");
-
-                    b.Property<string>("Premiered");
-
-                    b.Property<double>("Rating");
-
-                    b.Property<string>("RecommendedAge");
-
-                    b.Property<string>("Source");
-
-                    b.Property<string>("Status");
-
-                    b.Property<string>("Synopsis");
-
-                    b.Property<string>("Title");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MangaItem");
-                });
-
-            modelBuilder.Entity("Capstone.Models.NovelItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Aired");
-
-                    b.Property<int>("EpisodeCount");
-
-                    b.Property<int>("EpisodeDuration");
-
-                    b.Property<int>("Popularity");
-
-                    b.Property<string>("Premiered");
-
-                    b.Property<double>("Rating");
-
-                    b.Property<string>("RecommendedAge");
-
-                    b.Property<string>("Source");
-
-                    b.Property<string>("Status");
-
-                    b.Property<string>("Synopsis");
-
-                    b.Property<string>("Title");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("NovelItem");
-                });
-
-            modelBuilder.Entity("Capstone.Models.Reviews", b =>
+            modelBuilder.Entity("Capstone.Models.AnimeReviews", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -176,7 +108,233 @@ namespace Capstone.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("AnimeReviews");
+                });
+
+            modelBuilder.Entity("Capstone.Models.Favorite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AnimeItemId");
+
+                    b.Property<int?>("MangaItemId");
+
+                    b.Property<int?>("NovelItemId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimeItemId");
+
+                    b.HasIndex("MangaItemId");
+
+                    b.HasIndex("NovelItemId");
+
+                    b.ToTable("Favorites");
+                });
+
+            modelBuilder.Entity("Capstone.Models.FriendList", b =>
+                {
+                    b.Property<Guid?>("UserId");
+
+                    b.Property<Guid?>("FriendId");
+
+                    b.Property<DateTime>("RequestSent");
+
+                    b.Property<int>("RequestStatus");
+
+                    b.HasKey("UserId", "FriendId");
+
+                    b.HasIndex("FriendId");
+
+                    b.ToTable("Friends");
+                });
+
+            modelBuilder.Entity("Capstone.Models.MangaItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EpisodeCount");
+
+                    b.Property<string>("ImagePath");
+
+                    b.Property<int>("Members");
+
+                    b.Property<int>("Popularity");
+
+                    b.Property<string>("Premiered")
+                        .IsRequired();
+
+                    b.Property<double>("Rating");
+
+                    b.Property<string>("RecommendedAge")
+                        .IsRequired();
+
+                    b.Property<string>("Source")
+                        .IsRequired();
+
+                    b.Property<string>("Status")
+                        .IsRequired();
+
+                    b.Property<string>("Synopsis")
+                        .IsRequired();
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<string>("Type")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MangaItem");
+                });
+
+            modelBuilder.Entity("Capstone.Models.MangaList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompleteStatus");
+
+                    b.Property<int>("MangaItemId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.Property<int>("UserProgress");
+
+                    b.Property<int>("UserRating");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MangaItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MangaList");
+                });
+
+            modelBuilder.Entity("Capstone.Models.MangaReviews", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MangaItemId");
+
+                    b.Property<DateTime>("PostDate");
+
+                    b.Property<int>("Rating");
+
+                    b.Property<string>("Review");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MangaItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MangaReviews");
+                });
+
+            modelBuilder.Entity("Capstone.Models.NovelItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EpisodeCount");
+
+                    b.Property<string>("ImagePath");
+
+                    b.Property<int>("Members");
+
+                    b.Property<int>("Popularity");
+
+                    b.Property<string>("Premiered")
+                        .IsRequired();
+
+                    b.Property<double>("Rating");
+
+                    b.Property<string>("RecommendedAge")
+                        .IsRequired();
+
+                    b.Property<string>("Source")
+                        .IsRequired();
+
+                    b.Property<string>("Status")
+                        .IsRequired();
+
+                    b.Property<string>("Synopsis")
+                        .IsRequired();
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<string>("Type")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NovelItem");
+                });
+
+            modelBuilder.Entity("Capstone.Models.NovelList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompleteStatus");
+
+                    b.Property<int>("NovelItemId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.Property<int>("UserProgress");
+
+                    b.Property<int>("UserRating");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NovelItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NovelList");
+                });
+
+            modelBuilder.Entity("Capstone.Models.NovelReviews", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("NovelItemId");
+
+                    b.Property<DateTime>("PostDate");
+
+                    b.Property<int>("Rating");
+
+                    b.Property<string>("Review");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NovelItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("NovelReviews");
                 });
 
             modelBuilder.Entity("Capstone.Models.Role", b =>
@@ -210,8 +368,6 @@ namespace Capstone.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<DateTime>("Birthday");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -220,17 +376,7 @@ namespace Capstone.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)));
-
                     b.Property<DateTime>("JoinedDate");
-
-                    b.Property<string>("LastName")
-                        .HasMaxLength(50);
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -366,7 +512,7 @@ namespace Capstone.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Capstone.Models.Reviews", b =>
+            modelBuilder.Entity("Capstone.Models.AnimeReviews", b =>
                 {
                     b.HasOne("Capstone.Models.AnimeItem", "Anime")
                         .WithMany("Reviews")
@@ -374,7 +520,87 @@ namespace Capstone.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Capstone.Models.User", "User")
+                        .WithMany("AnimeReviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Capstone.Models.Favorite", b =>
+                {
+                    b.HasOne("Capstone.Models.AnimeItem", "AnimeFavorite")
+                        .WithMany()
+                        .HasForeignKey("AnimeItemId");
+
+                    b.HasOne("Capstone.Models.MangaItem", "MangaFavorite")
+                        .WithMany()
+                        .HasForeignKey("MangaItemId");
+
+                    b.HasOne("Capstone.Models.NovelItem", "NovelFavorite")
+                        .WithMany()
+                        .HasForeignKey("NovelItemId");
+                });
+
+            modelBuilder.Entity("Capstone.Models.FriendList", b =>
+                {
+                    b.HasOne("Capstone.Models.User", "Friend")
+                        .WithMany("FriendUsers")
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Capstone.Models.User", "User")
+                        .WithMany("UserFriends")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Capstone.Models.MangaList", b =>
+                {
+                    b.HasOne("Capstone.Models.MangaItem", "Manga")
+                        .WithMany("MangaLists")
+                        .HasForeignKey("MangaItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Capstone.Models.User", "User")
+                        .WithMany("MangaList")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Capstone.Models.MangaReviews", b =>
+                {
+                    b.HasOne("Capstone.Models.MangaItem", "Manga")
                         .WithMany("Reviews")
+                        .HasForeignKey("MangaItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Capstone.Models.User", "User")
+                        .WithMany("MangaReviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Capstone.Models.NovelList", b =>
+                {
+                    b.HasOne("Capstone.Models.NovelItem", "Novel")
+                        .WithMany("NovelLists")
+                        .HasForeignKey("NovelItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Capstone.Models.User", "User")
+                        .WithMany("NovelList")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Capstone.Models.NovelReviews", b =>
+                {
+                    b.HasOne("Capstone.Models.NovelItem", "Novel")
+                        .WithMany("Reviews")
+                        .HasForeignKey("NovelItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Capstone.Models.User", "User")
+                        .WithMany("NovelReviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

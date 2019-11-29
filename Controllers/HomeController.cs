@@ -19,21 +19,30 @@ namespace Capstone.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var reviewList = await _context.Reviews.ToListAsync<Reviews>();
-            var animeList = await _context.AnimeItem.ToListAsync<AnimeItem>();
-            var newestAnime = new List<AnimeItem>();
-            var mostPopularAnime = new List<AnimeItem>();
-            foreach (var anime in animeList)
+            var animeReviewList = await _context.AnimeReviews.ToListAsync<AnimeReviews>();
+            var mangaReviewList = await _context.MangaReviews.ToListAsync<MangaReviews>();
+            var novelReviewList = await _context.NovelReviews.ToListAsync<NovelReviews>();
+
+            var animeList = await _context.AnimeItem.OrderByDescending(a => a.Rating).Take(5).ToListAsync<AnimeItem>();
+            var mangaList = await _context.MangaItem.OrderByDescending(a => a.Rating).Take(5).ToListAsync<MangaItem>();
+            var novelList = await _context.NovelItem.OrderByDescending(a => a.Rating).Take(5).ToListAsync<NovelItem>();
+
+            var newestAnime = await _context.AnimeItem.OrderByDescending(a => a.Id).Take(15).ToListAsync<AnimeItem>();
+            var newestManga = await _context.MangaItem.OrderByDescending(a => a.Id).Take(15).ToListAsync<MangaItem>();
+            var newestNovel = await _context.NovelItem.OrderByDescending(a => a.Id).Take(15).ToListAsync<NovelItem>();
+
+            var homeViewModel = new HomePageViewModel
             {
-                if (anime.Popularity <= 5)
-                {
-                    mostPopularAnime.Add(anime);
-                }
-            }
-            var homeViewModel = new HomePageViewModel();
-            homeViewModel.NewestReviews = reviewList;
-            homeViewModel.NewestAnime = animeList;
-            homeViewModel.HighestRated = mostPopularAnime;
+                NewestReviewsAnime = animeReviewList,
+                NewestAnime = newestAnime,
+                HighestRatedAnime = animeList,
+                NewestReviewsManga = mangaReviewList,
+                NewestManga = newestManga,
+                HighestRatedManga = mangaList,
+                NewestReviewsNovel = novelReviewList,
+                NewestNovel = newestNovel,
+                HighestRatedNovel = novelList
+            };
             return View(homeViewModel);
         }
 

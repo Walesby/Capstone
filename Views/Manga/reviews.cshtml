@@ -1,47 +1,63 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Capstone.ViewModels.MangaReviewsViewModel
 @{
+    ViewData["Title"] = "Manga Reviews";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
     <div class="col-12">
         <h1>Manga Reviews</h1>
+    </div>
+</div>
+@{
+    var counter = 0;
+}
+@foreach (var review in Model.ReviewsList)
+{
+    var mangaId = review.MangaItemId;
+    var userId = review.UserId;
+    counter += 1;
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-1">
+                    <img src="@Model.MangaInfoList[counter - 1].ImagePath" class="img-thumbnail" width="100" />
+                </div>
+                <div class="col-10">
+                    <div class="row">
+                        <div class="col-8">
+                            <p><b>User:</b> <a asp-controller="Profile" asp-action="UserProfile" asp-route-username="@Model.UserList[counter-1].UserName">@Model.UserList[counter - 1].UserName</a></p>
+                        </div>
+                        <div class="col-4">
+                            <p><b>Date:</b> @review.PostDate</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <p><b>Series:</b> <a asp-controller="Manga" asp-action="Item" asp-route-id="@mangaId">@Model.MangaInfoList[counter - 1].Title</a></p>
+                        </div>
+                        <div class="col-4">
+                            <p><b>Rating:</b> @review.Rating</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
 
+                </div>
+                <div class="col-11">
+                    <p><b>Review </b></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+
+                </div>
+                <div class="col-10">
+                    <p>@review.Review</p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <h4>Insert Manga Title</h4>
-        <p>Username: Johnny</p>
-        <p>Date: 1970/12/31</p>
-        <p>Progress: 24/24</p>
-        <p>Rating: 5/10</p>
-    </div>
-    <div class="col-12">
-        <p>This is my super good review of a series that is only a 5/10</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <h4>Insert Manga Title</h4>
-        <p>Username: Johnny</p>
-        <p>Date: 1970/12/31</p>
-        <p>Progress: 24/24</p>
-        <p>Rating: 5/10</p>
-    </div>
-    <div class="col-12">
-        <p>This is my super good review of a series that is only a 5/10</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <h4>Insert Manga Title</h4>
-        <p>Username: Johnny</p>
-        <p>Date: 1970/12/31</p>
-        <p>Progress: 24/24</p>
-        <p>Rating: 5/10</p>
-    </div>
-    <div class="col-12">
-        <p>This is my super good review of a series that is only a 5/10</p>
-    </div>
-</div>
+}
+

@@ -3,7 +3,7 @@
 @inject UserManager<User> UserManager
 @{
     var parms = new Dictionary<string, string>
-    {
+{
         {"username",@User.Identity.Name }
     };
 }
@@ -19,21 +19,31 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity.Name</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Personal Reviews</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" asp-controller="Profile" asp-action="User" asp-all-route-data="parms">Profile</a>
-                    <a class="dropdown-item" href="#">Friends</a>
-                    <a class="dropdown-item" asp-controller="Profile" asp-action="AnimeReviews" asp-all-route-data="parms">Reviews</a>
-                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account Settings</a>
+                    <a class="dropdown-item" asp-controller="Profile" asp-action="AnimeReviews" asp-all-route-data="parms">Anime Reviews</a>
+                    <a class="dropdown-item" asp-controller="Profile" asp-action="MangaReviews" asp-all-route-data="parms">Manga Reviews</a>
+                    <a class="dropdown-item" asp-controller="Profile" asp-action="NovelReviews" asp-all-route-data="parms">Novel Reviews</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin tools</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity.Name</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" asp-controller="Admin" asp-action="CreateItem">Create item</a>
-                    <a class="dropdown-item" asp-controller="Admin" asp-action="UpdateItem">Update item</a>
+                    <a class="dropdown-item" asp-controller="Profile" asp-action="UserProfile" asp-all-route-data="parms">Profile</a>
+                    <a class="dropdown-item" asp-controller="Friend" asp-action="FriendList">Friends</a>
+                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account Settings</a>
                 </div>
             </li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin tools</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="CreateItem">Create item</a>
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="UpdateItem">Update item</a>
+                    </div>
+                </li>
+            }
             <li class="nav-item">
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                     <button type="submit" class="nav-link btn btn-link text-light">Logout</button>

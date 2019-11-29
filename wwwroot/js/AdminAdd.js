@@ -9,6 +9,7 @@
         var premiered = seasonPremiered + " " + year;
         var source = $("#source").children("option:selected").val();
         var ageRating = $("#agerating").children("option:selected").val();
+        var imageUrl = $("#imageurl").val();
         var synopsis = $("#synopsis").val();
         var animeItem = {
             title: title,
@@ -18,6 +19,7 @@
             premiered: premiered,
             source: source,
             recommendedage: ageRating,
+            imagepath: imageUrl,
             synopsis: synopsis
         }
         var jsonAnimeItem = JSON.stringify(animeItem);
@@ -25,6 +27,28 @@
         if (collectionType == "Anime") {
             $.ajax({
                 url: "https://localhost:44319/api/crud/postanime",
+                type: "POST",
+                contentType: "application/json",
+                data: jsonAnimeItem,
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+        if (collectionType == "Manga") {
+            $.ajax({
+                url: "https://localhost:44319/api/crud/postmanga",
+                type: "POST",
+                contentType: "application/json",
+                data: jsonAnimeItem,
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+        if (collectionType == "Light Novel") {
+            $.ajax({
+                url: "https://localhost:44319/api/crud/postnovel",
                 type: "POST",
                 contentType: "application/json",
                 data: jsonAnimeItem,

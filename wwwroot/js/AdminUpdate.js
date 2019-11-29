@@ -10,6 +10,7 @@
         var premiered = seasonPremiered + " " + year;
         var source = $("#source").children("option:selected").val();
         var ageRating = $("#agerating").children("option:selected").val();
+        var imageUrl = $("#imageurl").val();
         var synopsis = $("#synopsis").val();
         var animeItem = {
             id: id,
@@ -20,6 +21,7 @@
             premiered: premiered,
             source: source,
             recommendedage: ageRating,
+            imagepath: imageUrl,
             synopsis: synopsis
         }
         var jsonAnimeItem = JSON.stringify(animeItem);

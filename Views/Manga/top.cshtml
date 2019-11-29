@@ -1,9 +1,13 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
+@section Scripts{
+    <script src="~/js/TopManga.js"></script>
 }
-
+@model Capstone.ViewModels.UserMangaListViewModel
+@{
+    ViewData["Title"] = $"Top Manga";
+}
 <div class="row">
     <div class="col-12">
         <h1>Top Manga</h1>
@@ -17,11 +21,50 @@
                     <th scope="col">Ranking</th>
                     <th scope="col">Series Title</th>
                     <th scope="col">Average Score</th>
-                    <th scope="col">Your Score</th>
-                    <th scope="col">Your Status</th>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <th scope="col">Your Score</th>
+                        <th scope="col">Your Status</th>
+                    }
                 </tr>
             </thead>
             <tbody>
+                @{
+                    var counter = 0;
+                }
+                @foreach (var manga in Model.MangaInfoList)
+                {
+                    var mangaId = manga.Id;
+                    counter += 1;
+                    <tr>
+                        <td>
+                            @counter
+                        </td>
+                        <td>
+                            <a asp-controller="Manga" asp-action="Item" asp-route-id="@mangaId">@Html.DisplayFor(model => manga.Title)</a>
+                            <input type="hidden" id="mangaid" value="@mangaId" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => manga.Rating)
+                        </td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <td>
+                                @Model.UserMangaList[counter - 1].UserRating
+                            </td>
+                            <td>
+                                @if (@Model.UserMangaList[counter - 1].CompleteStatus == 0)
+                                {
+                                    <button type="button" class="btn btn-primary addmanga" value="@mangaId">Add manga</button>
+                                }
+                                else
+                                {
+                                    @Model.UserMangaList[counter - 1].CompleteStatus
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

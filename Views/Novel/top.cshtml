@@ -1,13 +1,16 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
+@section Scripts{
+    <script src="~/js/TopNovel.js"></script>
 }
-
-<div class="row" id="friends">
-    <div class="col-12" id="friendupdate">
+@model Capstone.ViewModels.UserNovelListViewModel
+@{
+    ViewData["Title"] = $"Top Novel";
+}
+<div class="row">
+    <div class="col-12">
         <h1>Top Light Novels</h1>
-
     </div>
 </div>
 <div class="row">
@@ -18,11 +21,50 @@
                     <th scope="col">Ranking</th>
                     <th scope="col">Series Title</th>
                     <th scope="col">Average Score</th>
-                    <th scope="col">Your Score</th>
-                    <th scope="col">Your Status</th>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <th scope="col">Your Score</th>
+                        <th scope="col">Your Status</th>
+                    }
                 </tr>
             </thead>
             <tbody>
+                @{
+                    var counter = 0;
+                }
+                @foreach (var novel in Model.NovelInfoList)
+                {
+                    var novelId = novel.Id;
+                    counter += 1;
+                    <tr>
+                        <td>
+                            @counter
+                        </td>
+                        <td>
+                            <a asp-controller="Novel" asp-action="Item" asp-route-id="@novelId">@novel.Title</a>
+                            <input type="hidden" id="novelid" value="@novelId" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => novel.Rating)
+                        </td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <td>
+                                @Model.UserNovelList[counter - 1].UserRating
+                            </td>
+                            <td>
+                                @if (@Model.UserNovelList[counter - 1].CompleteStatus == 0)
+                                {
+                                    <button type="button" class="btn btn-primary addnovel" value="@novelId">Add novel</button>
+                                }
+                                else
+                                {
+                                    @Model.UserNovelList[counter - 1].CompleteStatus
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

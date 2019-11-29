@@ -27,9 +27,10 @@ namespace Capstone.Models
         [Required]
         public string Synopsis { get; set; }
         public string ImagePath { get; set; }
+        public int Members { get; set; }
 
         public virtual ICollection<AnimeList> AnimeLists { get; set; }
-        public virtual ICollection<Reviews> Reviews { get; set; }
-        //public List<Genre> Genres { get; set; }
+        public virtual ICollection<AnimeReviews> Reviews { get; set; }
+
     }
 }

@@ -1,8 +1,98 @@
-﻿
+﻿@section Scripts{
+    <script src="~/js/UserMangaList.js"></script>
+}
+@model Capstone.ViewModels.UserMangaListViewModel
 @{
-    ViewData["Title"] = "UserMangaList";
+    var userName = Model.User.UserName;
+    ViewData["Title"] = $"{@userName}'s Manga List";
     Layout = "/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-12">
+        <h1>@userName's Manga List</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Series Title</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Progress</th>
+                    @if (userName == @User.Identity.Name)
+                    {
+                        <th scope="col">Update</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var counter = 0;
+                }
+                @foreach (var manga in Model.MangaInfoList)
+                {
+                    var mangaId = manga.Id;
+                    counter += 1;
+                    <tr>
+                        <td>
+                            @counter
+                        </td>
+                        <td>
+                            <a asp-controller="Manga" asp-action="Item" asp-route-id="@mangaId">@Html.DisplayFor(model => manga.Title)</a>
+                        </td>
+                        <td>
+                            @Model.UserMangaList[counter - 1].UserRating
+                        </td>
+                        <td>
+                            @Model.UserMangaList[counter - 1].UserProgress / @Html.DisplayFor(model => manga.EpisodeCount)
+                        </td>
+                        @if (userName == @User.Identity.Name)
+                        {
+                            <td>
+                                <button class="btn btn-primary editList" value="@mangaId" data-toggle="modal" data-target="#editmodal">Edit</button>
+                                <button class="btn btn-primary removeList" value="@mangaId">Remove</button>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<h1>UserMangaList</h1>
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update anime</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="userrating">Rating: </label>
+                        <select class="form-control" id="userrating">
+                            @for (var i = 1; i <= 10; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="userprogress">Complete episodes: </label>
+                        <input type="number" class="form-control" id="userprogress" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="submitupdate">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 

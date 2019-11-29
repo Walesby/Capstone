@@ -1,0 +1,8 @@
+﻿.title {
+    position: absolute;
+    top: 115px;
+    width: 80px;
+    color: white;
+    background-image: url(/img/image_box_shadow_bottom.png);
+    text-align: center;
+}

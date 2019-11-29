@@ -9,7 +9,8 @@ namespace Capstone.Models
     {
         public AnimeItem Anime { get; set; }
         public List<User> UserList { get; set; }
-        public List<Reviews> ReviewsList { get; set; }
+        public List<AnimeReviews> ReviewsList { get; set; }
         public bool UserListContains { get; set; }
+        public bool UserFavoriteContains { get; set; }
     }
 }

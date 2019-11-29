@@ -1,0 +1,103 @@
+﻿@model List<Capstone.Models.MangaItem>
+@{
+    ViewData["Title"] = "Manga Search Results";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+@{
+}
+<div class="row">
+    <div class="col-12">
+        <h1>Manga Search</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 nav">
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="A">A</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="B">B</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="C">C</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="D">D</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="E">E</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="F">F</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="G">G</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="H">H</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="I">I</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="J">J</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="K">K</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="L">L</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="M">M</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="N">N</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="O">O</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="P">P</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="Q">Q</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="R">R</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="S">S</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="T">T</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="U">U</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="V">V</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="W">W</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="X">X</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="Y">Y</a>
+        <a class="nav-link" asp-controller="Manga" asp-action="SearchResults" asp-route-startingLetter="Z">Z</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <form class="form-inline my-2 my-lg-0" asp-controller="Manga" asp-action="SearchResults">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="mangaTitle">
+            <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+@if (Model.Count >= 1)
+{
+    <div class="row">
+        <div class="col-12">
+            <h3>Results</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Chapters</th>
+                        <th>Rating</th>
+                        <th>Members</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var manga in Model)
+                    {
+                        <tr>
+                            <td><a asp-controller="Manga" asp-action="Item" asp-route-id="@manga.Id">@manga.Title</a></td>
+                            <td><p>@manga.Type</p></td>
+                            <td><p>@manga.EpisodeCount</p></td>
+                            <td><p>@manga.Rating</p></td>
+                            <td><p>@manga.Members</p></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-12">
+            <h3>Results</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>There is no manga that matched your query</p>
+        </div>
+    </div>
+}
+
+
+

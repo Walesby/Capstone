@@ -1,14 +1,22 @@
 ﻿$(document).ready(function () {
     var animeId;
+    var scoreTd;
+    var progressTd;
+    var maxProgress;
     $(".editList").click(function () {
         animeId = $(this).val();
+        scoreTd = $(this).closest('td').prev().prev();
+        progressTd = $(this).closest('td').prev();
+        maxProgress = progressTd.html().split("/");
+        maxProgress = maxProgress[1].trim();
+        $("#userrating option:first").prop('selected', true);
+        $("#userprogress").attr({"max":maxProgress, "min": 0}).val("");
     });
 
-    $("#submitupdate").click(function () {
+    $("#submitupdate").click(function () {       
         var userRating = $("#userrating").children("option:selected").val();
         var userProgress = $("#userprogress").val();
         var completeStatus = 2;
-
         var animeList = {
             UserRating: userRating,
             UserProgress: userProgress,
@@ -23,7 +31,8 @@
             contentType: "application/json",
             data: jsonAnimeList,
             success: function (response) {
-                console.log(response);
+                scoreTd.html(userRating);
+                progressTd.html(userProgress + " / " + maxProgress);
             }
         });
     });

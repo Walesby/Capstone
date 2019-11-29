@@ -1,0 +1,60 @@
+﻿@model Capstone.ViewModels.MangaReviewsViewModel
+@{
+    ViewData["Title"] = "Manga Reviews";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <h1>@Model.UserList[0].UserName's Manga Reviews</h1>
+    </div>
+</div>
+@{
+    if (Model != null && Model.UserList.Count >= 1)
+    {
+        var counter = 0;
+        foreach (var review in Model.ReviewsList)
+        {
+            var mangaId = review.MangaItemId;
+            var userId = review.UserId;
+            counter += 1;
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-1">
+                            <img src="@Model.MangaInfoList[counter - 1].ImagePath" class="img-thumbnail" width="100" />
+                        </div>
+                        <div class="col-10">
+                            <div class="row">
+                                <div class="col-8">
+                                    <p>Series: <a asp-controller="Manga" asp-action="Item" asp-route-id="@mangaId">@Model.MangaInfoList[counter - 1].Title</a></p>
+                                </div>
+                                <div class="col-4">
+                                    <p>Rating: @review.Rating</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <p>User: <a asp-controller="Profile" asp-action="UserProfile" asp-route-username="@Model.UserList[counter-1].UserName">@Model.UserList[counter - 1].UserName</a></p>
+                                </div>
+                                <div class="col-4">
+                                    <p>Date: @review.PostDate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">
+
+                        </div>
+                        <div class="col-10">
+                            <p>@review.Review</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+
+
+

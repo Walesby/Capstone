@@ -17,6 +17,7 @@
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/lightslider.css" rel="stylesheet"/>
+    @RenderSection("Styles", false);
 
 </head>
 <body>
@@ -61,35 +62,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Search">Profile Search</a>
-                    </li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li>
-                            <i class="fas fa-bell"></i>
-                        </li>
-                        <li>
-                            <i class="far fa-bell"></i>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                        </li>
-                        <li>
-                            <i class="far fa-envelope"></i>
-                        </li>
-                    }
-
-                    <li>
-                        <form class="navbar-form navbar-left" action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-light" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </li>
+                    </li>                   
                 </ul>
             </div>
         </nav>
@@ -97,8 +70,8 @@
     <div class="container" id="content">
         <partial name="_CookieConsentPartial" />
         <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <main role="main" class="pb-3" id="maincontent">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" id="maincontent">
+                <main role="main" class="pb-3" >
                     @RenderBody()
                 </main>
             </div>
